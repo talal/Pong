@@ -1,0 +1,26 @@
+@startuml
+' Fachliches Datenmodell für Pong 3-Team Projekt
+
+class User {
+  +id: Long
+  +username: String
+  +passwordHash: String
+  +profileImagePath: String
+}
+
+class Game {
+  +id: Long
+  +startTime: LocalDateTime
+  +endTime: LocalDateTime
+  +winnerId: Long
+}
+
+class GamePlayer {
+  +id: Long
+  +score: Integer
+}
+
+User "1" -- "*" GamePlayer : spielt
+Game "1" -- "*" GamePlayer : enthält
+
+@enduml
