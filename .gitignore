@@ -2,7 +2,7 @@ target/
 !backend/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-**/.devcontainer/
+.devcontainer/
 
 ### IntelliJ IDEA ###
 .idea
@@ -36,8 +36,8 @@ build/
 .DS_Store
 
 ### Vue.js & ReactJs
-node_modules
-/dist
+**node_modules
+**/dist
 
 # local env files
 .env.local
