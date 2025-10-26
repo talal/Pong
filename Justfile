@@ -11,7 +11,7 @@ default:
 setup-vue-client:
     bun install
 
-# Build Vue frontend client
+# Run Vue frontend client
 [working-directory('vue-client')]
 run-vue-client: setup-vue-client
     bun run dev
