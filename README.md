@@ -22,9 +22,6 @@ just
 
 ## Authors
 
-- Anwar, Muhammad Talal
-  - muhammadtalal.anwar@stud.th-luebeck.de
-- Lefhal-Lalaoui, Mohammed
-  - ?
-- Omarov, Roman
-  - roman.omarov@stud.th-luebeck.de
+- Anwar, Muhammad Talal (muhammadtalal.anwar@stud.th-luebeck.de)
+- Lefhal-Lalaoui, Mohammed (mohammed.lefhal-lalaoui@stud.th-luebeck.de)
+- Omarov, Roman (roman.omarov@stud.th-luebeck.de)
