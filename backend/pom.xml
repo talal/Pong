@@ -14,7 +14,6 @@
 	<url>https://git.mylab.th-luebeck.de/roman.omarov/paf_wise_25_26_grp_i</url>
 	<name>Pong</name>
 	<description>Pong game for PaF class 25/26</description>
-	<url/>
 	<licenses>
 		<license/>
 	</licenses>
@@ -110,6 +109,25 @@
 					</excludes>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.15.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
+                            <generatorName>java</generatorName>
+                            <configOptions>
+                                <sourceFolder>src/gen/java/main</sourceFolder>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
