@@ -1,60 +1,21 @@
-target/
-!backend/.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-.devcontainer
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
-### Mac OS ###
+### OS & Environment ###
 .DS_Store
+.env*
+*.log*
 
-### Vue.js & ReactJs
-**node_modules
-**/dist
+### Backend (Spring Boot / Maven) ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
 
-# local env files
-.env.local
-.env.*.local
-.env
+### Frontend ###
+# Only React specific ignores since Vue has its own .gitignore in subdirectory.
+node_modules/
+dist/
+build/
+*.local
 
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-*.log
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+### IDEs & Dev Tools ###
+.idea/
+.vscode/
+.devcontainer/
+*.code-workspace

@@ -4,14 +4,14 @@ alias fmt := format
 
 [private]
 default:
-    just --list
+    just --list --justfile {{ justfile() }}
 
 # Set up Vue frontend client
 [working-directory('vue-client')]
 setup-vue-client:
     bun install
 
-# Build Vue frontend client
+# Run Vue frontend client
 [working-directory('vue-client')]
 run-vue-client: setup-vue-client
     bun run dev
@@ -30,4 +30,4 @@ format:
 
     # Format Justfile
     echo '{{ ITALIC + MAGENTA }}Formatting Justfile...{{ NORMAL }}'
-    just --unstable --fmt
+    just --unstable --fmt --justfile {{ justfile() }}
