@@ -4,8 +4,20 @@
 *.log*
 
 ### Backend (Spring Boot / Maven) ###
+HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
 ### Frontend ###
 # Only React specific ignores since Vue has its own .gitignore in subdirectory.
@@ -17,5 +29,9 @@ build/
 ### IDEs & Dev Tools ###
 .idea/
 .vscode/
+.zed/
 .devcontainer/
 *.code-workspace
+*.iws
+*.iml
+*.ipr

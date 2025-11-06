@@ -8,7 +8,7 @@
 		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.paf.gruppe-i</groupId>
+	<groupId>com.paf.gruppe_i</groupId>
 	<artifactId>Pong</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<url>https://git.mylab.th-luebeck.de/roman.omarov/paf_wise_25_26_grp_i</url>
