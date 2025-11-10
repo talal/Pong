@@ -11,6 +11,7 @@ servers:
     url: wss://localhost/ws
     protocol: wss
     description: prod server for Pong
+defaultContentType: application/json
 channels:
   game/{gameId}/status:
     description: Channel for real-time game status updates
