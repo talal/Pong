@@ -1,0 +1,100 @@
+asyncapi: '3.0.0'
+info:
+  title: Multiplayer Pong Game WebSocket API
+  version: '0.0.1'
+  description: WebSocket API for real-time communication in a multiplayer Pong game
+  contact:
+    name: Pong Game Dev Team
+    email: roman.omarov@stud.th-luebeck.de
+servers:
+  production:
+    url: wss://localhost/ws
+    protocol: wss
+    description: prod server for Pong
+channels:
+  game/{gameId}/status:
+    description: Channel for real-time game status updates
+    subscribe:
+      summary: Subscribe to game state updates
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            ballPosition:
+              type: object
+              properties:
+                x:
+                  type: number
+                y:
+                  type: number
+            paddlePositions:
+              type: object
+              properties:
+                player1:
+                  type: number
+                player2:
+                  type: number
+            score:
+              type: object
+              properties:
+                player1:
+                  type: integer
+                player2:
+                  type: integer
+            gameStatus:
+              type: string
+          required:
+            - ballPosition
+            - paddlePositions
+            - score
+            - gameStatus
+  game/{gameId}/player/{playerId}/move:
+    description: Channel for player paddle movement commands
+    publish:
+      summary: Publish player paddle movement
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            direction:
+              type: string
+              enum:
+                - up
+                - down
+          required:
+            - direction
+  ping:
+    description: Ping/Pong WebSocket heartbeat frames
+    subscribe:
+      summary: Receive pong responses
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+          required:
+            - timestamp
+    publish:
+      summary: Send ping frame
+      message:
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+          required:
+            - timestamp
+tags:
+  - name: Game Status
+    description: Real-time game events and state updates
+  - name: Player Movement
+    description: Player paddle control commands
+  - name: Ping Pong
+    description: WebSocket heartbeat mechanism
