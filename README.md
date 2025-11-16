@@ -1,15 +1,5 @@
 # Pong - PaF Gruppe I (WS 25/26)
 
-## Setup
-
-Install all project dependencies using [Homebrew](https://brew.sh):
-
-```sh
-brew bundle
-```
-
-This will automatically install all required dependencies defined in the `Brewfile`.
-
 ## Usage
 
 This project uses [Just](https://github.com/casey/just), a command runner similar to Make.
