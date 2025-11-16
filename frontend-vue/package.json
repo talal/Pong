@@ -1,5 +1,5 @@
 {
-  "name": "vue-client",
+  "name": "frontend-vue",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -7,13 +7,15 @@
     "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build",
-    "lint": "eslint . --fix --cache",
-    "format": "prettier --write src/"
+    "dev": "bunx --bun vite",
+    "build": "bun run type-check && bun run build-only",
+    "preview": "bunx --bun vite preview",
+
+    "build-only": "bunx --bun vite build",
+    "type-check": "bunx --bun vue-tsc --build",
+
+    "lint": "bunx --bun eslint . --fix --cache",
+    "format": "bunx --bun prettier --write src/"
   },
   "dependencies": {
     "pinia": "^3.0.3",
