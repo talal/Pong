@@ -27,11 +27,12 @@ build/
 *.local
 
 ### IDEs & Dev Tools ###
+.devcontainer/
+.flox/
 .idea/
 .vscode/
 .zed/
-.devcontainer/
 *.code-workspace
-*.iws
 *.iml
 *.ipr
+*.iws

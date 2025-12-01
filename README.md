@@ -2,24 +2,48 @@
 
 ## Usage
 
-This project uses [Just](https://github.com/casey/just), a command runner similar to Make.
-Think of it as a collection of shortcuts for common project tasks.
+### Backend
 
-Install just if you don't have it already:
+TODO...
 
-```sh
-brew install just
+### Vue Frontend
 
+Prerequisites:
+
+- [Bun] is the only required dependency. We use it as package manager, build tool (bundler), and as the runtime.
+
+Compile and run with hot-reload for development:
+
+```bash
+bun run dev
 ```
 
-Then run the following to see all available commands:
+Compile and minify for production:
 
-```sh
-just
+```bash
+bun run build
 ```
+
+Build the container image: 
+
+```bash
+docker build -t paf-frontend-vue .
+```
+
+Run the container:
+
+```bash
+docker run -d --rm --name paf-frontend-vue -p 4173:4173 paf-frontend-vue
+```
+
+### React Frontend
+
+TODO...
 
 ## Authors
 
 - Anwar, Muhammad Talal (muhammadtalal.anwar@stud.th-luebeck.de)
 - Lefhal-Lalaoui, Mohammed (mohammed.lefhal-lalaoui@stud.th-luebeck.de)
 - Omarov, Roman (roman.omarov@stud.th-luebeck.de)
+
+[bun]: https://bun.com/
