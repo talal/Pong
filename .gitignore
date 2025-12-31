@@ -28,7 +28,6 @@ build/
 
 ### IDEs & Dev Tools ###
 .devcontainer/
-.flox/
 .idea/
 .vscode/
 .zed/

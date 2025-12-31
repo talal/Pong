@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PaF Demo</title>
+</head>
+<body>
+	<div id="result">Loading...</div>
+
+<script>
+(async () => {
+	const box = document.getElementById('result');
+	const token = sessionStorage.getItem('accessToken'); //from JWT login
+
+	if (!token) {
+		box.innerHTML = "<div>No JWT found. Please <a href='/login'>sign in via JWT</a> first or <a href='/'>return to menu</a>.</div>";
+		return;
+	}
+
+	try {
+		const resp = await fetch('/api/hello', {
+			headers: { 'Authorization': 'Bearer ' + token }
+		});
+		if (!resp.ok) {
+			box.innerHTML = "<div>Error: " + resp.status + " " + resp.statusText + "</div>";
+			return;
+		}
+		// /api/hello delivers text/html
+		const html = await resp.text();
+		box.innerHTML = html;
+	} catch (e) {
+		box.innerHTML = "<div>Network error: " + e + "</div>";
+	}
+})();
+</script>
+</body>
+</html>
+
