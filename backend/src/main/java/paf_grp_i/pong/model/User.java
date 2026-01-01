@@ -1,6 +1,7 @@
 package paf_grp_i.pong.model;
 
 import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 

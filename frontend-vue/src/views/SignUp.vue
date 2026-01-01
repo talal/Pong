@@ -1,18 +1,32 @@
 <template>
   <div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow" style="max-width: 400px; width: 100%;">
+    <div class="card p-4 shadow" style="max-width: 400px; width: 100%">
       <h4 class="mb-3 text-center">User Sign Up (SPA)</h4>
 
       <form @submit.prevent="signup" novalidate>
         <div class="mb-3">
           <label class="form-label" for="email">E-Mail Address</label>
-          <input id="email" v-model.trim="email" type="email" class="form-control"
-                 placeholder="name@example.com" required autocomplete="email" />
+          <input
+            id="email"
+            v-model.trim="email"
+            type="email"
+            class="form-control"
+            placeholder="name@example.com"
+            required
+            autocomplete="email"
+          />
         </div>
         <div class="mb-3">
           <label class="form-label" for="password">Password</label>
-          <input id="password" v-model="password" type="password" class="form-control"
-                 placeholder="••••••••" required autocomplete="new-password" />
+          <input
+            id="password"
+            v-model="password"
+            type="password"
+            class="form-control"
+            placeholder="••••••••"
+            required
+            autocomplete="new-password"
+          />
         </div>
 
         <button class="btn btn-primary w-100 mb-3" :disabled="busy">Sign Up</button>
@@ -38,17 +52,22 @@ const router = useRouter()
 
 async function signup() {
   if (busy.value) return
-  busy.value = true; error.value = ''; success.value = ''
+  busy.value = true
+  error.value = ''
+  success.value = ''
   try {
     const resp = await fetch('/api/auth/process_signup', {
       method: 'POST',
-      headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify({ email: email.value, password: password.value })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email.value, password: password.value }),
     })
     if (!resp.ok) {
       // 409 = e-mail address already in use, 400 = Bad Request
       let msg = `Fehler: ${resp.status}`
-      try { const j = await resp.json(); msg = j.error || j.message || msg } catch {}
+      try {
+        const j = await resp.json()
+        msg = j.error || j.message || msg
+      } catch {}
       error.value = msg
       return
     }

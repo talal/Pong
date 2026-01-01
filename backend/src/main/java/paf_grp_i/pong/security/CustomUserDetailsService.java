@@ -8,11 +8,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import paf_grp_i.pong.model.User;
 import paf_grp_i.pong.repository.UserRepository;
 
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepo;
-     
+    @Autowired private UserRepository userRepo;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByEmail(username);

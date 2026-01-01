@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import paf_grp_i.pong.model.User;
 import paf_grp_i.pong.repository.UserRepository;
 
@@ -26,7 +27,8 @@ public class PongApplication {
         };
     }
 
-    private void createUserIfMissing(UserRepository repo, PasswordEncoder encoder, String email, String rawPassword) {
+    private void createUserIfMissing(
+            UserRepository repo, PasswordEncoder encoder, String email, String rawPassword) {
         if (!repo.existsByEmail(email)) {
             User user = new User();
             user.setEmail(email);

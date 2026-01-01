@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import paf_grp_i.pong.game.Game;
 import paf_grp_i.pong.game.GamePlayer;
 import paf_grp_i.pong.game.GameState;
@@ -24,8 +25,7 @@ public class GameService {
     // Simple matchmaking queue
     private final ConcurrentLinkedQueue<GamePlayer> waitingPlayers = new ConcurrentLinkedQueue<>();
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
+    @Autowired private SimpMessagingTemplate messagingTemplate;
 
     /**
      * Attempts to join a player to a game.
@@ -54,7 +54,14 @@ public class GameService {
             playerGameMap.put(opponent.getSessionId(), game.getId());
             playerGameMap.put(newPlayer.getSessionId(), game.getId());
 
-            System.out.println("Game Started: " + game.getId() + " (" + opponent.getUsername() + " vs " + newPlayer.getUsername() + ")");
+            System.out.println(
+                    "Game Started: "
+                            + game.getId()
+                            + " ("
+                            + opponent.getUsername()
+                            + " vs "
+                            + newPlayer.getUsername()
+                            + ")");
             return game;
         } else {
             // No opponent, add to queue

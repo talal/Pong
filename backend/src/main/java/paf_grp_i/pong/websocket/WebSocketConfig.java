@@ -19,25 +19,25 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-    	registration.interceptors(jwtInterceptor);  //JWT for STOMP
+        registration.interceptors(jwtInterceptor); // JWT for STOMP
     }
-    
-	@Override
-	public void configureMessageBroker(MessageBrokerRegistry registry) {
 
-		//public messages via /topic, private messages via /queue
-		registry.enableSimpleBroker("/topic", "/queue");
-		//prefix(es) for messages that have to be processed by a controller
-		registry.setApplicationDestinationPrefixes("/app");
-		//prefix for user-specific messages
-		registry.setUserDestinationPrefix("/user");
-	}
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
 
-	@Override
-	public void registerStompEndpoints(StompEndpointRegistry registry) {
+        // public messages via /topic, private messages via /queue
+        registry.enableSimpleBroker("/topic", "/queue");
+        // prefix(es) for messages that have to be processed by a controller
+        registry.setApplicationDestinationPrefixes("/app");
+        // prefix for user-specific messages
+        registry.setUserDestinationPrefix("/user");
+    }
 
-		registry.addEndpoint("/websocket")			//has to match brokerURL in chat(-jwt).js
-				.setAllowedOriginPatterns("*");     //restrict in production use
-;
-	}
+    @Override
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+
+        registry.addEndpoint("/websocket") // has to match brokerURL in chat(-jwt).js
+                .setAllowedOriginPatterns("*"); // restrict in production use
+        ;
+    }
 }

@@ -15,33 +15,36 @@ import paf_grp_i.pong.security.JwtTokenService;
 @Component
 public class JwtStompChannelInterceptor implements ChannelInterceptor {
 
-	private final JwtTokenService jwt;
-	private final UserDetailsService uds;
+    private final JwtTokenService jwt;
+    private final UserDetailsService uds;
 
-	public JwtStompChannelInterceptor(JwtTokenService jwt, UserDetailsService uds) {
-		this.jwt = jwt;
-		this.uds = uds;
-	}
+    public JwtStompChannelInterceptor(JwtTokenService jwt, UserDetailsService uds) {
+        this.jwt = jwt;
+        this.uds = uds;
+    }
 
-	@Override
-	public Message<?> preSend(Message<?> message, MessageChannel channel) {
-		StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+    @Override
+    public Message<?> preSend(Message<?> message, MessageChannel channel) {
+        StompHeaderAccessor accessor =
+                MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
-		if (accessor != null && StompCommand.CONNECT.equals(accessor.getCommand())) {
-			String bearer = accessor.getFirstNativeHeader("Authorization");
+        if (accessor != null && StompCommand.CONNECT.equals(accessor.getCommand())) {
+            String bearer = accessor.getFirstNativeHeader("Authorization");
 
-			if (bearer != null && bearer.startsWith("Bearer ")) {
-				String token = bearer.substring(7);
-				if (jwt.isValid(token)) {
-					String username = jwt.getUsername(token);
-					var user = uds.loadUserByUsername(username);
-					var auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-					accessor.setUser(auth);
-				} else {
-					throw new IllegalArgumentException("Invalid JWT");
-				}
-			}
-		}
-		return message;
-	}
+            if (bearer != null && bearer.startsWith("Bearer ")) {
+                String token = bearer.substring(7);
+                if (jwt.isValid(token)) {
+                    String username = jwt.getUsername(token);
+                    var user = uds.loadUserByUsername(username);
+                    var auth =
+                            new UsernamePasswordAuthenticationToken(
+                                    user, null, user.getAuthorities());
+                    accessor.setUser(auth);
+                } else {
+                    throw new IllegalArgumentException("Invalid JWT");
+                }
+            }
+        }
+        return message;
+    }
 }

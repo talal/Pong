@@ -8,10 +8,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class JwtBlacklistService {
 
-    //thread-safe set for revoked tokens (esp. after logout)
+    // thread-safe set for revoked tokens (esp. after logout)
     private final Set<String> blacklistedTokens = ConcurrentHashMap.newKeySet();
 
-    //add token to blacklist
+    // add token to blacklist
     public void blacklistToken(String token) {
         blacklistedTokens.add(token);
     }
@@ -20,7 +20,7 @@ public class JwtBlacklistService {
         return blacklistedTokens.contains(token);
     }
 
-    //optional
+    // optional
     public void removeToken(String token) {
         blacklistedTokens.remove(token);
     }

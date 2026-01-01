@@ -11,13 +11,13 @@ const routes = [
   { path: '/app/signup', component: SignUp },
   { path: '/app/menu', component: Menu, meta: { requiresAuth: true } },
   { path: '/app/game', component: Game, meta: { requiresAuth: true } },
-  { path: '/:pathMatch(.*)*', redirect: '/app/menu' }
+  { path: '/:pathMatch(.*)*', redirect: '/app/menu' },
 ]
 
 const router = createRouter({
   //if the SPA runs under /app (in production), use createWebHistory('/app')
   history: createWebHistory(),
-  routes
+  routes,
 })
 
 router.beforeEach((to, from, next) => {

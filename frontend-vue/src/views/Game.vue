@@ -2,12 +2,10 @@
   <div class="container text-center py-4">
     <h1 class="mb-3">Pong Game</h1>
 
-    <div v-if="status === 'WAITING'" class="alert alert-info">
-      Waiting for an opponent...
-    </div>
+    <div v-if="status === 'WAITING'" class="alert alert-info">Waiting for an opponent...</div>
     <div v-else-if="status === 'FINISHED'" class="alert alert-warning">
       Game Over! Winner: {{ winner }}
-      <br>
+      <br />
       <button class="btn btn-primary mt-2" @click="returnToMenu">Back to Menu</button>
     </div>
 
@@ -16,7 +14,7 @@
         ref="gameCanvas"
         width="800"
         height="500"
-        style="border: 4px solid #333; background: black; cursor: none;"
+        style="border: 4px solid #333; background: black; cursor: none"
         @mousemove="onMouseMove"
       ></canvas>
     </div>
@@ -55,13 +53,15 @@ let ctx = null
 
 // Local State
 let mySessionId = null // We need to know who we are to move the correct paddle locally
-let myY = 50           // My local paddle position (0-100)
+let myY = 50 // My local paddle position (0-100)
 let keys = { ArrowUp: false, ArrowDown: false }
 
 // Render State
 let gameState = {
-  ballX: 50, ballY: 50,
-  p1Y: 50, p2Y: 50
+  ballX: 50,
+  ballY: 50,
+  p1Y: 50,
+  p2Y: 50,
 }
 
 onMounted(() => {
@@ -132,7 +132,8 @@ function startGame(id) {
 function updateState(game) {
   if (game.state === 'FINISHED') {
     status.value = 'FINISHED'
-    winner.value = (game.player1.score > game.player2.score) ? game.player1.username : game.player2.username
+    winner.value =
+      game.player1.score > game.player2.score ? game.player1.username : game.player2.username
     if (subscription) subscription.unsubscribe()
   }
 
@@ -171,7 +172,7 @@ function updatePaddlePosition() {
     // Send to server
     client.publish({
       destination: '/app/game.move',
-      body: JSON.stringify({ y: myY })
+      body: JSON.stringify({ y: myY }),
     })
   }
 }
@@ -199,7 +200,7 @@ function renderLoop() {
 
     // Paddles
     ctx.fillStyle = 'white'
-    ctx.fillRect(toX(0), toY(gameState.p1Y - 7.5), toX(2), toY(15))  // P1
+    ctx.fillRect(toX(0), toY(gameState.p1Y - 7.5), toX(2), toY(15)) // P1
     ctx.fillRect(toX(98), toY(gameState.p2Y - 7.5), toX(2), toY(15)) // P2
 
     // Ball

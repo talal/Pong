@@ -13,11 +13,31 @@ public class GamePlayer {
         this.y = 50.0; // Start in the middle (0-100 scale)
     }
 
-    public String getSessionId() { return sessionId; }
-    public String getUsername() { return username; }
-    public int getScore() { return score; }
-    public void setScore(int score) { this.score = score; }
-    public double getY() { return y; }
-    public void setY(double y) { this.y = y; }
-    public void incrementScore() { this.score++; }
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void incrementScore() {
+        this.score++;
+    }
 }

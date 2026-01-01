@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class PongApiController {
 
     @ResponseBody
-	@GetMapping("/hello")
-	public String hello() {
-		return "<h1>Hello World!</h1><a href='/'>Return to Menu</a>";
-	}
+    @GetMapping("/hello")
+    public String hello() {
+        return "<h1>Hello World!</h1><a href='/'>Return to Menu</a>";
+    }
 
-	@GetMapping("/chat")
-	public String chat() {
-		return "chat";
-	}
+    @GetMapping("/chat")
+    public String chat() {
+        return "chat";
+    }
 }

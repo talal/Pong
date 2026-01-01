@@ -57,7 +57,6 @@ npm run dev
   - `router.js`: Client-side routing configuration (guards against unauthenticated access).
   - `main.js`: Application entry point.
 
-
 ## React Frontend (`/frontend-react`)
 
 TODO...
