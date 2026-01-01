@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "app_user") // Renamed to avoid SQL reserved keyword "user"
+@Table(name = "user")
 public class User {
 
     @Id
