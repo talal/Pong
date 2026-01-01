@@ -5,6 +5,7 @@ import SignUp from './views/SignUp.vue'
 import Login from './views/Login.vue'
 import Hello from './views/Hello.vue'
 import Chat from './views/Chat.vue'
+import Game from './views/Game.vue'
 
 const routes = [
   { path: '/', redirect: '/app/menu' },
@@ -13,6 +14,7 @@ const routes = [
   { path: '/app/login', component: Login },
   { path: '/app/hello', component: Hello, meta: { requiresAuth: true } },
   { path: '/app/chat', component: Chat, meta: { requiresAuth: true } },
+  { path: '/app/game', component: Game, meta: { requiresAuth: true } },
   { path: '/:pathMatch(.*)*', redirect: '/app/menu' } // Fallback
 ]
 

@@ -11,6 +11,7 @@
     <RouterLink to="/app/login" class="btn btn-success btn-lg d-block w-100 mb-3">Sign In</RouterLink>
     <RouterLink to="/app/hello" class="btn btn-warning btn-lg d-block w-100 mb-3">Hello World</RouterLink>
     <RouterLink to="/app/chat"  class="btn btn-warning btn-lg d-block w-100 mb-3">Chat</RouterLink>
+    <RouterLink to="/app/game" class="btn btn-danger btn-lg d-block w-100 mb-3">Play Pong</RouterLink>
 
     <button type="button" class="btn btn-outline-secondary btn-lg d-block w-100"
             @click="logoutJwt">
