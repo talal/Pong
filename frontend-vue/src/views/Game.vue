@@ -2,11 +2,18 @@
   <div class="container text-center py-4">
     <h1 class="mb-3">Pong Game</h1>
 
-    <div v-if="status === 'WAITING'" class="alert alert-info">Waiting for an opponent...</div>
+    <div v-if="status === 'WAITING'" class="alert alert-info">
+      Waiting for an opponent...
+      <br />
+      <button class="btn btn-primary mt-2" @click="returnToMenu">Return to Menu</button>
+    </div>
     <div v-else-if="status === 'FINISHED'" class="alert alert-warning">
       Game Over! Winner: {{ winner }}
       <br />
-      <button class="btn btn-primary mt-2" @click="returnToMenu">Back to Menu</button>
+      <button class="btn btn-primary mt-2" @click="returnToMenu">Return to Menu</button>
+    </div>
+    <div v-else-if="status === 'PLAYING'" class="mb-3">
+      <button class="btn btn-outline-danger" @click="returnToMenu">Quit Game</button>
     </div>
 
     <div class="d-flex justify-content-center">
@@ -64,11 +71,36 @@ let gameState = {
   p2Y: 50,
 }
 
+// Helper to decode JWT
+function getUsernameFromToken(token) {
+  if (!token) return 'Player 1'
+  try {
+    const base64Url = token.split('.')[1]
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    const jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        })
+        .join(''),
+    )
+    return JSON.parse(jsonPayload).sub
+  } catch (e) {
+    return 'Player 1'
+  }
+}
+
 onMounted(() => {
   if (!auth.token) {
     router.push('/app/login')
     return
   }
+
+  // Set the logged-in user's name immediately
+  p1Name.value = getUsernameFromToken(auth.token)
+
   ctx = gameCanvas.value.getContext('2d')
 
   // Add Keyboard Listeners
@@ -82,7 +114,11 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKeyDown)
   window.removeEventListener('keyup', onKeyUp)
-  if (client) client.deactivate()
+
+  // Clean disconnect when leaving the component whether by quit button or back navigation
+  if (client) {
+    client.deactivate()
+  }
 })
 
 function onKeyDown(e) {
@@ -230,6 +266,7 @@ function renderLoop() {
 }
 
 function returnToMenu() {
+  // Disconnect is handled automatically in onBeforeUnmount
   router.push('/app/menu')
 }
 </script>
