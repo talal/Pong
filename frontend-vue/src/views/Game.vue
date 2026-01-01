@@ -164,9 +164,10 @@ function updatePaddlePosition() {
     changed = true
   }
 
-  // Clamp to screen (0-100)
-  if (myY < 0) myY = 0
-  if (myY > 100) myY = 100
+  // Clamp to screen (paddle height is 15%, so center is 7.5 away from edge)
+  const halfPaddleHeight = 7.5
+  if (myY < halfPaddleHeight) myY = halfPaddleHeight
+  if (myY > 100 - halfPaddleHeight) myY = 100 - halfPaddleHeight
 
   if (changed) {
     // Send to server
