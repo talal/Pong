@@ -60,3 +60,47 @@ npm run dev
 ## React Frontend (`/frontend-react`)
 
 TODO...
+
+## The Game Loop
+
+The core of the application is a **Server-Authoritative Game Loop** running in `GameService.java`.
+
+Instead of trusting the client (which could be hacked), the server calculates the ball position, physics, and scoring. The frontend merely displays the state it receives.
+
+### How it works
+
+1. **Tick:** The `@Scheduled(fixedRate = 17)` annotation triggers the loop approximately **60 times per second** (1000ms / 60 ≈ 16.6ms).
+2. **Update:** For every active game, the server:
+   - Updates the Ball position (`x = x + dx`, `y = y + dy`).
+   - Checks for **Wall Collisions** (Top/Bottom).
+   - Checks for **Paddle Collisions** (Left/Right).
+   - Updates the **Score** if the ball passes a paddle.
+   - Checks for **Win Condition** (First to 11).
+3. **Broadcast:** The new state is sent via WebSocket to `/topic/game/{gameId}`.
+4. **Render:** Both clients receive the exact same data and render the frame.
+
+### Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant T as Timer (@Scheduled)
+    participant S as GameService
+    participant P1 as Player 1
+    participant P2 as Player 2
+
+    loop Every 17ms (60 Hz)
+        T->>S: Tick
+        S->>S: Update Ball Position
+        S->>S: Check Collisions & Score
+
+        par Broadcast State
+            S->>P1: Send JSON (Ball X/Y, Score)
+            S->>P2: Send JSON (Ball X/Y, Score)
+        end
+
+        P1->>P1: Redraw Canvas
+        P2->>P2: Redraw Canvas
+    end
+
+    Note over P1,P2: Clients only send paddle moves, server decides the rest.
+```
