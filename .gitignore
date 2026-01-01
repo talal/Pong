@@ -1,16 +1,26 @@
-### OS & Environment ###
+# ══════════ OS & Environment ══════════
 .DS_Store
 .env*
+logs
 *.log*
 
-### Backend (Spring Boot / Maven) ###
+# ══════════ IDE & Dev Tools ══════════
+*.code-workspace
+*.iml
+*.ipr
+*.iws
+.devcontainer/
+.idea/
+.vscode/
+
+# ══════════ Backend (Spring Boot / Maven) ══════════
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+# STS
 .apt_generated
 .classpath
 .factorypath
@@ -19,19 +29,10 @@ target/
 .springBeans
 .sts4-cache
 
-### Frontend ###
-# Only React specific ignores since Vue has its own .gitignore in subdirectory.
+# ══════════ Frontend (Vue / React) ══════════
 node_modules/
 dist/
 build/
 *.local
-
-### IDEs & Dev Tools ###
-.devcontainer/
-.idea/
-.vscode/
-.zed/
-*.code-workspace
-*.iml
-*.ipr
-*.iws
+**/*.backup.*
+**/*.back.*
