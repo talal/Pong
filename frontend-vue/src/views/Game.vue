@@ -38,22 +38,27 @@ const router = useRouter()
 const gameCanvas = ref(null)
 
 // Game State
-const status = ref('CONNECTING') // CONNECTING, WAITING, PLAYING, FINISHED
+const status = ref('CONNECTING')
 const p1Name = ref('Player 1')
 const p2Name = ref('Player 2')
 const p1Score = ref(0)
 const p2Score = ref(0)
 const winner = ref('')
 
-// WebSocket Client
+// WebSocket
 let client = null
 let gameId = null
 let subscription = null
 
-// Canvas Context
+// Canvas
 let ctx = null
 
-// Render State (Keep separate for smooth rendering)
+// Local State
+let mySessionId = null // We need to know who we are to move the correct paddle locally
+let myY = 50           // My local paddle position (0-100)
+let keys = { ArrowUp: false, ArrowDown: false }
+
+// Render State
 let gameState = {
   ballX: 50, ballY: 50,
   p1Y: 50, p2Y: 50
@@ -65,35 +70,50 @@ onMounted(() => {
     return
   }
   ctx = gameCanvas.value.getContext('2d')
+
+  // Add Keyboard Listeners
+  window.addEventListener('keydown', onKeyDown)
+  window.addEventListener('keyup', onKeyUp)
+
   connect()
-  // Start the render loop
   requestAnimationFrame(renderLoop)
 })
 
 onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeyDown)
+  window.removeEventListener('keyup', onKeyUp)
   if (client) client.deactivate()
 })
+
+function onKeyDown(e) {
+  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') keys[e.key] = true
+}
+
+function onKeyUp(e) {
+  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') keys[e.key] = false
+}
 
 function connect() {
   client = new Client({
     brokerURL: 'ws://localhost:8080/websocket',
     connectHeaders: { Authorization: 'Bearer ' + auth.token },
-    // debug: (str) => console.log(str), // Uncomment for debugging
     reconnectDelay: 5000,
   })
 
   client.onConnect = () => {
-    console.log('Connected to WS')
+    // Determine my session ID from the socket URL or handshake
+    // Note: STOMP client doesn't explicitly expose session ID easily in all versions.
+    // Simpler hack: The server sends the game object. I can check usernames.
+    // But for controls, we just send "My Y". The server applies it to the sender.
 
-    // 1. Subscribe to private queue to wait for a match
+    // Subscribe to matchmaking
     client.subscribe('/user/queue/match', (message) => {
       const body = JSON.parse(message.body)
       gameId = body.gameId
-      console.log('Match found! Game ID:', gameId)
+      console.log('Match found:', gameId)
       startGame(gameId)
     })
 
-    // 2. Ask to join
     status.value = 'WAITING'
     client.publish({ destination: '/app/game.join' })
   }
@@ -103,8 +123,6 @@ function connect() {
 
 function startGame(id) {
   status.value = 'PLAYING'
-
-  // Subscribe to the specific game topic to receive updates 60x/sec
   subscription = client.subscribe(`/topic/game/${id}`, (message) => {
     const game = JSON.parse(message.body)
     updateState(game)
@@ -118,64 +136,73 @@ function updateState(game) {
     if (subscription) subscription.unsubscribe()
   }
 
-  // Update Reactive Scores (Vue updates the DOM)
   p1Name.value = game.player1.username
   p2Name.value = game.player2.username
   p1Score.value = game.player1.score
   p2Score.value = game.player2.score
 
-  // Update Position Data (Canvas render loop uses this)
+  // Sync physics
   gameState.ballX = game.ballX
   gameState.ballY = game.ballY
   gameState.p1Y = game.player1.y
   gameState.p2Y = game.player2.y
 }
 
-function onMouseMove(event) {
+function updatePaddlePosition() {
   if (status.value !== 'PLAYING') return
 
-  const rect = gameCanvas.value.getBoundingClientRect()
-  const yPx = event.clientY - rect.top
+  let changed = false
+  const speed = 1.5 // Speed of paddle movement
 
-  // Convert Pixel Y (0-500) to Game Y (0-100)
-  const yPercent = (yPx / 500) * 100
+  if (keys.ArrowUp) {
+    myY -= speed
+    changed = true
+  }
+  if (keys.ArrowDown) {
+    myY += speed
+    changed = true
+  }
 
-  // Send new position to server
-  client.publish({
-    destination: '/app/game.move',
-    body: JSON.stringify({ y: yPercent })
-  })
+  // Clamp to screen (0-100)
+  if (myY < 0) myY = 0
+  if (myY > 100) myY = 100
+
+  if (changed) {
+    // Send to server
+    client.publish({
+      destination: '/app/game.move',
+      body: JSON.stringify({ y: myY })
+    })
+  }
 }
 
 function renderLoop() {
   if (!ctx) return
 
-  // Clear screen
+  // Update paddle logic every frame
+  updatePaddlePosition()
+
+  // Clear
   ctx.fillStyle = 'black'
   ctx.fillRect(0, 0, 800, 500)
 
   if (status.value === 'PLAYING') {
-    // Helper to map 0-100 coordinate system to pixels
     const toX = (val) => (val / 100) * 800
     const toY = (val) => (val / 100) * 500
 
-    // Draw Net
+    // Net
     ctx.strokeStyle = '#333'
     ctx.beginPath()
     ctx.moveTo(400, 0)
     ctx.lineTo(400, 500)
     ctx.stroke()
 
-    // Draw Paddles (Assume width 2%, height 15%)
+    // Paddles
     ctx.fillStyle = 'white'
+    ctx.fillRect(toX(0), toY(gameState.p1Y - 7.5), toX(2), toY(15))  // P1
+    ctx.fillRect(toX(98), toY(gameState.p2Y - 7.5), toX(2), toY(15)) // P2
 
-    // Player 1 (Left)
-    ctx.fillRect(toX(0), toY(gameState.p1Y - 7.5), toX(2), toY(15))
-
-    // Player 2 (Right)
-    ctx.fillRect(toX(98), toY(gameState.p2Y - 7.5), toX(2), toY(15))
-
-    // Draw Ball (Size roughly 1.5%)
+    // Ball
     ctx.fillStyle = 'yellow'
     ctx.beginPath()
     ctx.arc(toX(gameState.ballX), toY(gameState.ballY), 8, 0, Math.PI * 2)

@@ -123,6 +123,13 @@ public class GameService {
         }
     }
 
+    // Check when a player reaches 11 points.
+    private void checkWinCondition(Game game) {
+        if (game.getPlayer1().getScore() >= 11 || game.getPlayer2().getScore() >= 11) {
+            game.setState(GameState.FINISHED);
+        }
+    }
+
     private void updatePhysics(Game game) {
         // Move Ball
         game.setBallX(game.getBallX() + game.getBallDX());
@@ -134,10 +141,7 @@ public class GameService {
         }
 
         // 2. Collision with Paddles (Simplified)
-        // Player 1 is on Left (X=0), Player 2 is on Right (X=100)
-        // Assume Paddle is roughly 15 units high (from y-7.5 to y+7.5) and 2 units wide
-
-        // Check Left Paddle (Player 1)
+        // Player 1 (Left)
         if (game.getBallX() <= 2) {
             if (Math.abs(game.getBallY() - game.getPlayer1().getY()) < 10) {
                 game.setBallDX(Math.abs(game.getBallDX())); // Bounce right
@@ -145,11 +149,12 @@ public class GameService {
             } else if (game.getBallX() < 0) {
                 // Goal for Player 2
                 game.getPlayer2().incrementScore();
+                checkWinCondition(game);
                 resetBall(game);
             }
         }
 
-        // Check Right Paddle (Player 2)
+        // Player 2 (Right)
         if (game.getBallX() >= 98) {
             if (Math.abs(game.getBallY() - game.getPlayer2().getY()) < 10) {
                 game.setBallDX(-Math.abs(game.getBallDX())); // Bounce left
@@ -157,6 +162,7 @@ public class GameService {
             } else if (game.getBallX() > 100) {
                 // Goal for Player 1
                 game.getPlayer1().incrementScore();
+                checkWinCondition(game);
                 resetBall(game);
             }
         }
