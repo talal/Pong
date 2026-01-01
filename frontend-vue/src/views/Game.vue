@@ -20,8 +20,8 @@
     </div>
 
     <div class="d-flex justify-content-center gap-5 mt-3 display-6">
-      <div class="text-primary">{{ p1Name }}: {{ p1Score }}</div>
-      <div class="text-danger">{{ p2Name }}: {{ p2Score }}</div>
+      <div class="text-primary">{{ p1Name }}</div>
+      <div class="text-danger">{{ p2Name }}</div>
     </div>
   </div>
 </template>
@@ -191,12 +191,27 @@ function renderLoop() {
     const toX = (val) => (val / 100) * 800
     const toY = (val) => (val / 100) * 500
 
-    // Net
+    // Draw net (dashed line for retro look)
     ctx.strokeStyle = '#333'
+    ctx.lineWidth = 4
+    ctx.setLineDash([8, 8]) // Create dashed effect
     ctx.beginPath()
     ctx.moveTo(400, 0)
     ctx.lineTo(400, 500)
     ctx.stroke()
+    ctx.setLineDash([]) // Reset dash for other elements
+
+    // Draw scores (overlay on top of canvas)
+    ctx.fillStyle = '#666' // Gray color to fade into background slightly
+    ctx.font = 'bold 60px "Courier New", monospace' // Monospace font gives a "retro" look
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'top'
+
+    // Player 1 score (left side)
+    ctx.fillText(p1Score.value, 350, 20)
+
+    // Player 2 score (right side)
+    ctx.fillText(p2Score.value, 450, 20)
 
     // Paddles
     ctx.fillStyle = 'white'
@@ -204,7 +219,7 @@ function renderLoop() {
     ctx.fillRect(toX(98), toY(gameState.p2Y - 7.5), toX(2), toY(15)) // P2
 
     // Ball
-    ctx.fillStyle = 'yellow'
+    ctx.fillStyle = 'white'
     ctx.beginPath()
     ctx.arc(toX(gameState.ballX), toY(gameState.ballY), 8, 0, Math.PI * 2)
     ctx.fill()
