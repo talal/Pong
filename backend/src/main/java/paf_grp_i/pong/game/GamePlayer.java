@@ -1,8 +1,18 @@
 package paf_grp_i.pong.game;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class GamePlayer {
+    @Setter(AccessLevel.NONE)
     private String sessionId; // WebSocket Session ID
+
+    @Setter(AccessLevel.NONE)
     private String username;
+
     private int score;
     private double y; // Paddle vertical position
 
@@ -11,30 +21,6 @@ public class GamePlayer {
         this.username = username;
         this.score = 0;
         this.y = 50.0; // Start in the middle (0-100 scale)
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
     }
 
     public void incrementScore() {

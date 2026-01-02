@@ -58,14 +58,9 @@ public class GameService {
             playerGameMap.put(opponent.getSessionId(), game.getId());
             playerGameMap.put(newPlayer.getSessionId(), game.getId());
 
-            System.out.println(
-                    "Game Started: "
-                            + game.getId()
-                            + " ("
-                            + opponent.getUsername()
-                            + " vs "
-                            + newPlayer.getUsername()
-                            + ")");
+            System.out.printf(
+                    "Game Started: %s (%s vs %s)%n",
+                    game.getId(), opponent.getUsername(), newPlayer.getUsername());
             return game;
         } else {
             // No opponent, add to queue
