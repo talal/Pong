@@ -26,4 +26,10 @@ public class User {
 
     @Column(name = "last_name", nullable = true, length = 20)
     private String lastName;
+
+    @Column(nullable = false)
+    private int gamesWon = 0;
+
+    @Column(nullable = false)
+    private int gamesPlayed = 0;
 }

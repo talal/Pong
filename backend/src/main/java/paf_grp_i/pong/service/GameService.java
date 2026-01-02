@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import paf_grp_i.pong.game.Game;
 import paf_grp_i.pong.game.GamePlayer;
 import paf_grp_i.pong.game.GameState;
+import paf_grp_i.pong.model.User;
+import paf_grp_i.pong.repository.UserRepository;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,6 +29,7 @@ public class GameService {
     private final ConcurrentLinkedQueue<GamePlayer> waitingPlayers = new ConcurrentLinkedQueue<>();
 
     @Autowired private SimpMessagingTemplate messagingTemplate;
+    @Autowired private UserRepository userRepository;
 
     /**
      * Attempts to join a player to a game.
@@ -100,12 +104,27 @@ public class GameService {
         String gameId = playerGameMap.remove(sessionId);
         if (gameId != null) {
             Game game = activeGames.remove(gameId);
-            if (game != null) {
+
+            // Only proceed if the game wasn't already finished (prevents double counting)
+            if (game != null && game.getState() != GameState.FINISHED) {
                 game.setState(GameState.FINISHED);
-                // Notify the other player (if any)
+
+                // If Player 1 quit, set Player 2's score to 11.
+                // If Player 2 quit, set Player 1's score to 11.
+                if (game.getPlayer1().getSessionId().equals(sessionId)) {
+                    game.getPlayer2().setScore(11);
+                } else if (game.getPlayer2() != null
+                        && game.getPlayer2().getSessionId().equals(sessionId)) {
+                    game.getPlayer1().setScore(11);
+                }
+
+                // Now save the result (Logic in persistGameResult uses the scores we just updated)
+                persistGameResult(game);
+
+                // Notify the other player
                 messagingTemplate.convertAndSend("/topic/game/" + gameId, game);
 
-                // Cleanup the other player's mapping
+                // Cleanup maps
                 String p1 = game.getPlayer1().getSessionId();
                 String p2 = game.getPlayer2() != null ? game.getPlayer2().getSessionId() : null;
 
@@ -134,6 +153,27 @@ public class GameService {
     private void checkWinCondition(Game game) {
         if (game.getPlayer1().getScore() >= 11 || game.getPlayer2().getScore() >= 11) {
             game.setState(GameState.FINISHED);
+            persistGameResult(game);
+        }
+    }
+
+    @Transactional
+    protected void persistGameResult(Game game) {
+        User p1 = userRepository.findByEmail(game.getPlayer1().getUsername());
+        User p2 = userRepository.findByEmail(game.getPlayer2().getUsername());
+
+        if (p1 != null && p2 != null) {
+            p1.setGamesPlayed(p1.getGamesPlayed() + 1);
+            p2.setGamesPlayed(p2.getGamesPlayed() + 1);
+
+            if (game.getPlayer1().getScore() > game.getPlayer2().getScore()) {
+                p1.setGamesWon(p1.getGamesWon() + 1);
+            } else {
+                p2.setGamesWon(p2.getGamesWon() + 1);
+            }
+
+            userRepository.save(p1);
+            userRepository.save(p2);
         }
     }
 

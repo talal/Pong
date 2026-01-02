@@ -6,8 +6,10 @@
       <div class="alert alert-success" role="alert">You are logged in.</div>
 
       <div class="d-grid gap-3 mx-auto">
-        <RouterLink to="/app/game" class="btn btn-success btn-lg py-3"> Play Pong </RouterLink>
-
+        <RouterLink to="/app/game" class="btn btn-success btn-lg py-3">Play Pong</RouterLink>
+        <RouterLink to="/app/leaderboard" class="btn btn-primary btn-lg py-3">
+          Leaderboard
+        </RouterLink>
         <button @click="logout" class="btn btn-outline-danger">Logout</button>
       </div>
     </div>
