@@ -1,17 +1,19 @@
 package paf_grp_i.pong.security;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -69,39 +71,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtFilter)
             throws Exception {
-        http.cors(Customizer.withDefaults()) // Use the corsConfigurationSource bean defined above
+        http.cors(withDefaults()) // Use the corsConfigurationSource bean defined above
                 .csrf(
                         AbstractHttpConfigurer
                                 ::disable) // Disable CSRF (not needed for stateless JWT)
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(
-                        auth ->
-                                auth
-                                        // Public API endpoints (Login/Signup)
-                                        .requestMatchers(
-                                                "/api/auth/login", "/api/auth/process_signup")
-                                        .permitAll()
-
-                                        // WebSocket endpoint (Handshake)
-                                        .requestMatchers("/websocket/**")
-                                        .permitAll()
-
-                                        // Allow Preflight requests (OPTIONS)
-                                        .requestMatchers(HttpMethod.OPTIONS, "/**")
-                                        .permitAll()
-
-                                        // Error dispatch
-                                        .requestMatchers("/error")
-                                        .permitAll()
-
-                                        // Static assets (if you decide to bundle Vue later, keep
-                                        // this)
-                                        .requestMatchers("/app/**", "/favicon.ico")
-                                        .permitAll()
-
-                                        // Everything else requires authentication
-                                        .anyRequest()
-                                        .authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                .authorizeHttpRequests(this::configureAuth)
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 // Explicitly disable Form Login and Basic Auth to prevent redirects
@@ -110,5 +85,35 @@ public class WebSecurityConfig {
                 .logout(AbstractHttpConfigurer::disable);
 
         return http.build();
+    }
+
+    // Helper method to keep the main chain easy to read.
+    private void configureAuth(
+            AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry
+                    auth) {
+        auth
+                // Public API endpoints (Login/Signup)
+                .requestMatchers("/api/auth/login", "/api/auth/process_signup")
+                .permitAll()
+
+                // WebSocket endpoint (Handshake)
+                .requestMatchers("/websocket/**")
+                .permitAll()
+
+                // Allow Preflight requests (OPTIONS)
+                .requestMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()
+
+                // Error dispatch
+                .requestMatchers("/error")
+                .permitAll()
+
+                // Static assets (if you decide to bundle Vue later, keep this)
+                .requestMatchers("/app/**", "/favicon.ico")
+                .permitAll()
+
+                // Everything else requires authentication
+                .anyRequest()
+                .authenticated();
     }
 }
