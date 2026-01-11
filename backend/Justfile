@@ -1,0 +1,56 @@
+# Default recipe - shows available commands
+default:
+    @just --list
+
+# Build the JAR with Maven
+build:
+    mvn clean package
+
+# Build the JAR skipping tests
+build-fast:
+    mvn clean package -DskipTests
+
+# Build Docker image
+docker-build: build
+    docker build -t pong/backend:latest .
+
+# Build Docker image with custom tag
+docker-build-tag tag: build
+    docker build -t pong/backend:{{tag}} .
+
+# Build and run the Docker container
+run: docker-build
+    docker run -d -p 8080:8080 --name pong pong/backend:latest
+
+# Run Docker container with environment variables
+run-env: docker-build
+    docker run -d -p 8080:8080 \
+        -e SPRING_PROFILES_ACTIVE=dev \
+        --name pong pong/backend:latest
+
+# Stop and remove container
+stop:
+    docker stop pong || true
+    docker rm pong || true
+
+# Clean Docker images
+clean-docker:
+    docker rmi pong pong/backend:latest || true
+
+# Clean Maven build artifacts
+clean:
+    mvn clean
+
+# Full clean - Maven and Docker
+clean-all: stop clean-docker clean
+
+# Rebuild everything from scratch
+rebuild: clean-all docker-build
+
+# View logs from running container
+logs:
+    docker logs -f myapp
+
+# Execute shell in running container
+shell:
+    docker exec -it myapp /bin/bash
