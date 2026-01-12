@@ -1,9 +1,0 @@
-node_modules/
-dist/
-.git/
-.vscode/
-.env*
-!.env.production
-*.log
-coverage/
-.DS_Store
