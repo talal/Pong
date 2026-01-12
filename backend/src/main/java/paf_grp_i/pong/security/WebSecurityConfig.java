@@ -96,6 +96,10 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/auth/login", "/api/auth/process_signup")
                 .permitAll()
 
+                // Allow image loading
+                .requestMatchers("/api/user/avatar")
+                .permitAll()
+
                 // WebSocket endpoint (Handshake)
                 .requestMatchers("/websocket/**")
                 .permitAll()

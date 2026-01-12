@@ -32,4 +32,11 @@ public class User {
 
     @Column(nullable = false)
     private int gamesPlayed = 0;
+
+    // LOB (Large Object) for storing binary image data
+    @Lob
+    @Column(length = 1048576) // 1 MiB max size
+    private byte[] avatar;
+
+    private String avatarContentType;
 }

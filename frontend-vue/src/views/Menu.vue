@@ -6,10 +6,20 @@
       <div class="alert alert-success" role="alert">You are logged in.</div>
 
       <div class="d-grid gap-3 mx-auto">
-        <RouterLink to="/app/game" class="btn btn-success btn-lg py-3">Play Pong</RouterLink>
+        <RouterLink to="/app/game" class="btn btn-success btn-lg py-3"> Play Pong </RouterLink>
         <RouterLink to="/app/leaderboard" class="btn btn-primary btn-lg py-3">
           Leaderboard
         </RouterLink>
+
+        <div class="d-flex gap-2">
+          <RouterLink to="/app/change-password" class="btn btn-outline-warning w-50">
+            Change Password
+          </RouterLink>
+          <RouterLink to="/app/change-avatar" class="btn btn-outline-info w-50">
+            Change Profile Picture
+          </RouterLink>
+        </div>
+
         <button @click="logout" class="btn btn-outline-danger">Logout</button>
       </div>
     </div>

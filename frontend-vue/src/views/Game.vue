@@ -16,19 +16,52 @@
       <button class="btn btn-outline-danger" @click="returnToMenu">Quit Game</button>
     </div>
 
-    <div class="d-flex justify-content-center">
-      <canvas
-        ref="gameCanvas"
-        width="800"
-        height="500"
-        style="border: 4px solid #333; background: black; cursor: none"
-        @mousemove="onMouseMove"
-      ></canvas>
+    <div class="d-flex justify-content-center align-items-center mb-4">
+      <div class="d-flex align-items-center justify-content-center" style="width: 50px">
+        <h2 class="m-0 text-primary vertical-text-left text-nowrap">
+          {{ p1Name }}
+        </h2>
+      </div>
+
+      <div class="mx-3">
+        <canvas
+          ref="gameCanvas"
+          width="800"
+          height="500"
+          style="border: 4px solid #333; background: black; cursor: none; display: block"
+          @mousemove="onMouseMove"
+        ></canvas>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-center" style="width: 50px">
+        <h2 class="m-0 text-danger vertical-text-right text-nowrap">
+          {{ p2Name }}
+        </h2>
+      </div>
     </div>
 
-    <div class="d-flex justify-content-center gap-5 mt-3 display-6">
-      <div class="text-primary">{{ p1Name }}</div>
-      <div class="text-danger">{{ p2Name }}</div>
+    <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-between" style="width: 800px">
+        <div class="text-center">
+          <img
+            :src="getAvatarUrl(p1Name)"
+            alt="P1 Avatar"
+            class="border border-primary rounded shadow"
+            style="width: 250px; height: 250px; object-fit: cover"
+            @error="onImgError"
+          />
+        </div>
+
+        <div class="text-center">
+          <img
+            :src="getAvatarUrl(p2Name)"
+            alt="P2 Avatar"
+            class="border border-danger rounded shadow"
+            style="width: 250px; height: 250px; object-fit: cover"
+            @error="onImgError"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -71,7 +104,6 @@ let gameState = {
   p2Y: 50,
 }
 
-// Helper to decode JWT
 function getUsernameFromToken(token) {
   if (!token) return 'Player 1'
   try {
@@ -90,6 +122,19 @@ function getUsernameFromToken(token) {
   } catch (e) {
     return 'Player 1'
   }
+}
+
+function getAvatarUrl(email) {
+  // If it's a guest player or empty, use local default file
+  if (!email || email.includes('Player')) {
+    return '/default-avatar.jpg' // Path relative to 'public' folder
+  }
+  return `/api/user/avatar?email=${encodeURIComponent(email)}`
+}
+
+function onImgError(e) {
+  // If the image fails to load (e.g., 404), switch to local default
+  e.target.src = '/default-avatar.jpg'
 }
 
 onMounted(() => {
@@ -114,11 +159,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKeyDown)
   window.removeEventListener('keyup', onKeyUp)
-
-  // Clean disconnect when leaving the component whether by quit button or back navigation
-  if (client) {
-    client.deactivate()
-  }
+  if (client) client.deactivate()
 })
 
 function onKeyDown(e) {
@@ -137,11 +178,6 @@ function connect() {
   })
 
   client.onConnect = () => {
-    // Determine my session ID from the socket URL or handshake
-    // Note: STOMP client doesn't explicitly expose session ID easily in all versions.
-    // Simpler hack: The server sends the game object. I can check usernames.
-    // But for controls, we just send "My Y". The server applies it to the sender.
-
     // Subscribe to matchmaking
     client.subscribe('/user/queue/match', (message) => {
       const body = JSON.parse(message.body)
@@ -228,7 +264,7 @@ function renderLoop() {
     const toX = (val) => (val / 100) * 800
     const toY = (val) => (val / 100) * 500
 
-    // Draw net (dashed line for retro look)
+    // Draw middle line (dashed for retro look)
     ctx.strokeStyle = '#333'
     ctx.lineWidth = 4
     ctx.setLineDash([8, 8]) // Create dashed effect
@@ -270,3 +306,17 @@ function returnToMenu() {
   router.push('/app/menu')
 }
 </script>
+
+<style scoped>
+/* Rotates text -90 degrees (Bottom to Top) */
+.vertical-text-left {
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+/* Rotates text 90 degrees (Top to Bottom) */
+.vertical-text-right {
+  transform: rotate(90deg);
+  transform-origin: center;
+}
+</style>
