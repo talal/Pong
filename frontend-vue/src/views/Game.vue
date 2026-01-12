@@ -1,6 +1,6 @@
 <template>
   <div class="container text-center py-4">
-    <h1 class="mb-3">Pong Game</h1>
+    <h1 class="mb-3">Pong</h1>
 
     <div v-if="status === 'WAITING'" class="alert alert-info">
       Waiting for an opponent...
