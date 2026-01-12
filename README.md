@@ -20,13 +20,15 @@ Run using:
   - `controller/`: Handles incoming HTTP requests and WebSocket messages.
     - `GameController`: Manages WebSocket endpoints (`/app/game.join`, `/app/game.move`) for matchmaking and gameplay.
     - `JwtAuthController`: Handles REST endpoints for Signup (`/process_signup`) and Login (`/login`).
+    - `UserController`: Handles authenticated user actions (Avatar upload, Password change).
+    - `LeaderboardController`: Retrieves high score data.
     - `PongApiController`: General REST endpoints (e.g., user info).
   - `game/`: Contains the **Domain Model** for active game sessions (In-Memory).
     - `Game`: Represents the state of a running match (ball position, scores).
     - `GamePlayer`: Represents a player within a game session.
     - `GameState`: Enum for game status (WAITING, PLAYING, FINISHED).
   - `model/`: Contains **JPA Entities** for database persistence.
-    - `User`: Maps to the `app_user` database table.
+    - `User`: Maps to the `user` database table.
   - `repository/`: Data Access Layer.
     - `UserRepository`: Interface for CRUD operations on User entities.
   - `security/`: Configures Spring Security and JWT.
@@ -51,8 +53,10 @@ npm run dev
 - `src/`
   - `views/`: Vue Components representing distinct pages.
     - `Game.vue`: The main game client. Renders the `<canvas>` loop and captures keyboard input.
-    - `Menu.vue`: Main hub after login.
+    - `Menu.vue`: Main page after login (also acts as homepage when not logged in).
     - `Login.vue` / `SignUp.vue`: Authentication forms.
+    - `Leaderboard.vue`: Displays player rankings.
+    - `ChangePassword.vue` / `ChangeAvatar.vue`: Forms for user profile management.
   - `auth.js`: A reactive state object for managing the JWT token and Fetch wrapper.
   - `router.js`: Client-side routing configuration (guards against unauthenticated access).
   - `main.js`: Application entry point.
@@ -75,6 +79,6 @@ Instead of trusting the client (which could be hacked), the server calculates th
    - Checks for **Wall Collisions** (Top/Bottom).
    - Checks for **Paddle Collisions** (Left/Right).
    - Updates the **Score** if the ball passes a paddle.
-   - Checks for **Win Condition** (First to 11).
+   - Checks for **Win Condition** (First to 11 points).
 3. **Broadcast:** The new state is sent via WebSocket to `/topic/game/{gameId}`.
 4. **Render:** Both clients receive the exact same data and render the frame.
