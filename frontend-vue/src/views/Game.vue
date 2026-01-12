@@ -47,7 +47,7 @@
             :src="getAvatarUrl(p1Name)"
             alt="P1 Avatar"
             class="border border-primary rounded shadow"
-            style="width: 250px; height: 250px; object-fit: cover"
+            style="width: 200px; height: 200px; object-fit: cover"
             @error="onImgError"
           />
         </div>
@@ -57,7 +57,7 @@
             :src="getAvatarUrl(p2Name)"
             alt="P2 Avatar"
             class="border border-danger rounded shadow"
-            style="width: 250px; height: 250px; object-fit: cover"
+            style="width: 200px; height: 200px; object-fit: cover"
             @error="onImgError"
           />
         </div>
