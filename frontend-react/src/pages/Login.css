@@ -1,0 +1,49 @@
+.login-panel{
+  max-width: 460px;
+}
+
+/* header row with the small pill on the right */
+.login-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 18px;
+}
+
+/* vertical spacing between fields and actions */
+.login-form{
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+}
+
+/* label + input wrapper */
+.login-field{
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+
+/* makes link look like a button while keeping it a link */
+.login-link{
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* full width buttons */
+.login-btn{
+  width: 100%;
+}
+
+/* making error a small glass card  */
+.login-error{
+  padding: 12px 12px;
+  color: #ffd1dc;
+  border-color: rgba(255, 90, 120, 0.30);
+  background: linear-gradient(180deg, rgba(255,90,120,0.12) 0%, rgba(255,90,120,0.05) 100%);
+  font-family: var(--mono);
+  letter-spacing: 0.2px;
+}

@@ -1,0 +1,317 @@
+
+.game-page {
+  min-height: 100vh; 
+  padding: 28px 14px; /* outer spacing so the panel never touches edges */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  color: #e6e9f2; 
+  background:
+    radial-gradient(900px 500px at 50% -10%, rgba(90, 255, 214, 0.14) 0%, rgba(0,0,0,0) 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(126, 87, 255, 0.18) 0%, rgba(0,0,0,0) 60%),
+    radial-gradient(900px 500px at 10% 20%, rgba(255, 70, 146, 0.12) 0%, rgba(0,0,0,0) 60%),
+    linear-gradient(180deg, #05060a 0%, #070810 45%, #05050a 100%); /* layered neonish background */
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* width limiter that keeps the panel centered on large screens */
+.game-wrap {
+  width: 100%;
+  max-width: 1120px;
+  display: flex;
+  justify-content: center;
+}
+
+/* glass panel container */
+.game-panel {
+  width: 100%;
+  max-width: 980px;
+  border-radius: 18px;
+  padding: var(--panel-pad, 22px); /* js sets this smaller on short viewports */
+  background: rgba(10, 12, 18, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.04);
+  backdrop-filter: blur(10px);
+  max-height: calc(100vh - 56px); /* ensure everything stays accessible */
+  overflow: auto; /* scroll if the viewport is very short */
+}
+
+/* vertical layout inside the panel */
+.game-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--content-gap, 18px); /* js reduces this when height is low */
+}
+
+/* top header row */
+.game-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px; 
+}
+
+/* title typography */
+.game-title {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 0.8px;
+  font-weight: 900;
+  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-shadow: 0 0 14px rgba(90,255,214,0.15);
+}
+
+/* status */
+.status-pill {
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #b7bed3;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%);
+  border: 1px solid rgba(255,255,255,0.10);
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+
+.game-layout{
+  display:grid;
+  grid-template-columns: 42px auto 42px; 
+  justify-content:center;               
+  align-items:center;
+  gap: 30px;
+  padding: 0 10px;                     
+}
+
+/* side columns */
+.side-name{
+  width: 42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow: visible;
+}
+
+/* vertical names without transform baseline issues */
+.side-name-text{
+  margin:0;
+  font-weight:800;
+  letter-spacing:0.4px;
+  font-family:"Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size:16px;
+  white-space:nowrap;
+
+  writing-mode: vertical-rl;     
+  text-orientation: mixed;              
+  line-height:1;
+}
+
+/* left reads bottom->top */
+.side-left{
+  transform: rotate(180deg);
+  color:#6ee7ff;
+  text-shadow:0 0 12px rgba(110,231,255,0.25);
+  margin-left:25px;
+}
+
+/* right reads top->bottom */
+.side-right{
+  transform:none;
+  color:#ff6ea6;
+  text-shadow:0 0 12px rgba(255,110,166,0.25);
+  margin-right: 25px;
+}
+
+
+/* center column that holds the neon frame; flex keeps it centered even if content changes */
+.center-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* outer neon frame */
+.canvas-frame {
+  border-radius: 18px;
+  padding: 10px; /* thickness of neon border */
+  background: linear-gradient(
+    135deg,
+    rgba(110,231,255,0.22),
+    rgba(126,87,255,0.18),
+    rgba(255,110,166,0.20)
+  );
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 18px 60px rgba(0,0,0,0.55),
+    0 0 44px rgba(110,231,255,0.12),
+    0 0 44px rgba(255,110,166,0.10);
+  width: fit-content; /* shrink-wrap to the canvas size */
+  margin: 0 auto; /* additional safety centering */
+  display: flex;
+  justify-content: center;
+}
+
+/* inner dark frame (also serves as the positioning anchor for the overlay) */
+.canvas-inner {
+  border-radius: 14px;
+  padding: 6px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.08);
+  position: relative; /* overlay uses absolute positioning inside this box */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* canvas display size is controlled by css vars set from jsx */
+.pong-canvas {
+  display: block; /* remove inline gaps */
+  border-radius: 12px;
+  background: #05060a;
+  cursor: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  width: var(--canvas-w, 800px);
+  height: var(--canvas-h, 500px);
+}
+
+/* overlay that covers the canvas; shown for waiting/connecting/error/finished */
+.game-overlay {
+  position: absolute;
+  inset: 6px; /* match canvas-inner padding so corners align */
+  border-radius: 12px;
+  display: none; /* toggled via .is-visible */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    radial-gradient(700px 320px at 50% 40%, rgba(255,110,166,0.12) 0%, rgba(0,0,0,0) 55%),
+    radial-gradient(700px 320px at 50% 60%, rgba(110,231,255,0.10) 0%, rgba(0,0,0,0) 55%),
+    linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.62) 100%);
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255,255,255,0.06);
+  pointer-events: none; /* overlay should not block key input */
+}
+
+/* class toggle used in jsx to show/hide overlay */
+.game-overlay.is-visible {
+  display: flex;
+}
+
+/* large overlay title */
+.overlay-title {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(34px, 5.8vw, 56px); /* scales down on small screens */
+  text-shadow: 0 0 18px rgba(110,231,255,0.18), 0 0 18px rgba(255,110,166,0.16);
+}
+
+/* overlay subtitle */
+.overlay-sub {
+  margin: 10px 0 0;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(16px, 2.8vw, 24px); /* scales down on small screens */
+  color: #c7cde0;
+  text-shadow: 0 0 16px rgba(255,255,255,0.08);
+}
+
+/* green-ish win accent */
+.overlay-sub.win {
+  color: #bfffe8;
+  text-shadow: 0 0 16px rgba(90,255,214,0.18);
+}
+
+/* pink-ish lose accent */
+.overlay-sub.lose {
+  color: #ffd1e2;
+  text-shadow: 0 0 16px rgba(255,110,166,0.18);
+}
+
+/* button row */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* magenta themed button */
+.btn-magenta {
+  padding: 11px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  border: 1px solid rgba(255, 110, 166, 0.204);
+  background: linear-gradient(180deg, rgba(255, 110, 166, 0.141) 0%, rgba(255, 110, 166, 0.048) 100%);
+  color: #c4a1ae;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 26px rgba(255,110,166,0.12);
+  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+
+
+/* two player cards under the game */
+.avatar-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* player card container */
+.avatar-card {
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+}
+
+/* avatar size is controlled by css vars set from jsx */
+.avatar-img {
+  width: var(--avatar-size, 88px);
+  height: var(--avatar-size, 88px);
+  border-radius: 14px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.35);
+  box-shadow: 0 0 22px rgba(110,231,255,0.10);
+}
+
+/* player name line in the card */
+.meta-name {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* stats line in the card */
+.meta-stats {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #aab1c3;
+  letter-spacing: 0.2px;
+  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* small-screen tweaks so layout stays readable */
+@media (max-width: 520px) {
+  .game-layout {
+    gap: 18px; /* reduce side spacing */
+  }
+  .side-name-text {
+    font-size: 14px; /* reduce rotated name size */
+  }
+  .avatar-row {
+    grid-template-columns: 1fr; /* stack player cards */
+  }
+}

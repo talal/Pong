@@ -1,0 +1,139 @@
+
+.lb-panel{
+  max-width: 860px;
+}
+
+.lb-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 18px;
+}
+
+/* simple loader card that fits the theme */
+.lb-loading{
+  padding: 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 12px;
+}
+
+.lb-spinner{
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.16);
+  border-top-color: rgba(110,231,255,0.55);
+  animation: lbspin 900ms linear infinite;
+}
+
+@keyframes lbspin{
+  to{ transform: rotate(360deg); }
+}
+
+/* wrap adds a border radius and clips row hover effects cleanly */
+.lb-table-wrap{
+  overflow: hidden;
+}
+
+.lb-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  letter-spacing: 0.2px;
+}
+
+.lb-table thead th{
+  text-align:left;
+  padding: 14px 14px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #b7bed3;
+  background: rgba(0,0,0,0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.lb-table tbody td{
+  padding: 14px 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+}
+
+.lb-table tbody tr{
+  background: rgba(0,0,0,0.18);
+}
+
+.lb-table tbody tr:nth-child(even){
+  background: rgba(0,0,0,0.12);
+}
+
+.lb-table tbody tr:hover{
+  background: rgba(126,87,255,0.10);
+}
+
+.lb-col-rank, .lb-rank{
+  width: 52px;
+  text-align: center;
+}
+
+.lb-col-winrate{
+  width: 120px;
+}
+
+.lb-col-wins{
+  width: 90px;
+}
+
+.lb-col-played{
+  width: 100px;
+}
+
+.lb-player{
+  font-weight: 900;
+}
+
+.lb-winrate{
+  color: #ccf6ff;
+  text-shadow: 0 0 12px rgba(110,231,255,0.12);
+  font-weight: 900;
+}
+
+.lb-wins{
+  color: #ffe6b8;
+  text-shadow: 0 0 12px rgba(255,214,102,0.10);
+  font-weight: 900;
+}
+
+.lb-empty{
+  text-align:center;
+  padding: 18px 14px;
+}
+
+.lb-actions{
+  margin-top: 18px;
+  display:flex;
+  justify-content:center;
+}
+
+.lb-btn{
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* makes the table usable on small screens */
+@media (max-width: 720px){
+  .lb-col-wins, .lb-wins{
+    display:none;
+  }
+}
+
+@media (max-width: 560px){
+  .lb-col-played, .lb-played{
+    display:none;
+  }
+}
