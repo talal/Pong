@@ -63,7 +63,31 @@ npm run dev
 
 ## React Frontend (`/frontend-react`)
 
-TODO...
+Built with **React** (Vite + React Router).
+
+### Run
+```sh
+npm install
+npm run dev
+```
+
+### Structure
+
+- `src/`
+  - `pages/`: React components representing distinct pages.
+    - `Game.jsx`: Main game client. Renders the `<canvas>` loop, shows overlays (waiting / game over), connects to the STOMP websocket, and sends paddle movement.
+    - `Menu.jsx`: Main page after login (also acts as homepage when not logged in).
+    - `Login.jsx` / `SignUp.jsx`: Authentication forms.
+    - `Leaderboard.jsx`: Displays player rankings.
+    - `ChangePassword.jsx` / `ChangeAvatar.jsx`: Forms for user profile management.
+  - `Theme.css`: Shared cyber-dark theme variables and base styles used across all pages.
+  - `Menu.css` / `Login.css` / `SignUp.css` / `Leaderboard.css` / `ChangePassword.css` / `ChangeAvatar.css`: Page-specific styling files.
+  - `auth.js`: Token store and helpers for saving, reading, and clearing the JWT.
+  - `api.js`: Fetch wrapper for API calls (automatically adds the `Authorization` header).
+  - `utils/`
+    - `jwt.js`: Helpers for decoding the JWT payload (e.g. extracting username/email).
+  - `router.jsx` (or `main.jsx`, depending on setup): Application bootstrap and routing configuration.
+
 
 ## The Game Loop
 
