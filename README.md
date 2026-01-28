@@ -86,7 +86,7 @@ npm run dev
   - `api.js`: Fetch wrapper for API calls (automatically adds the `Authorization` header).
   - `utils/`
     - `jwt.js`: Helpers for decoding the JWT payload (e.g. extracting username/email).
-  - `router.jsx` (or `main.jsx`, depending on setup): Application bootstrap and routing configuration.
+  - `main.jsx`: Application bootstrap and routing configuration.
 
 
 ## The Game Loop
