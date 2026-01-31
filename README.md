@@ -7,7 +7,7 @@
 - Omarov, Roman (roman.omarov@stud.th-luebeck.de)
 
 ## Screencast
-<https://youtu.be/oR3-rXqrce0>
+<https://youtu.be/w9YyqTY9-Dc?si=huX6onfz6b0H9L9b>
 
 ## Backend (`/backend`)
 
