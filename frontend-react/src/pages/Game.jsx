@@ -287,7 +287,7 @@ export default function Game() {
             setWinner(
               game.player1.score > game.player2.score
                 ? game.player1.username
-                : game.player2.username
+                : game.player2.username,
             )
           }
 
@@ -425,7 +425,7 @@ export default function Game() {
       '--content-gap': `${ui.contentGap}px`,
       '--avatar-size': `${ui.avatarSize}px`,
     }),
-    [ui]
+    [ui],
   )
 
   // overlay is visible any time we are not actively playing
@@ -461,7 +461,9 @@ export default function Game() {
                     <div className={`game-overlay ${status !== 'PLAYING' ? 'is-visible' : ''}`}>
                       <div>
                         <p className="overlay-title">{overlayTitle}</p>
-                        <p className={`overlay-sub ${status === 'FINISHED' ? (youWon ? 'win' : 'lose') : ''}`}>
+                        <p
+                          className={`overlay-sub ${status === 'FINISHED' ? (youWon ? 'win' : 'lose') : ''}`}
+                        >
                           {overlaySub}
                         </p>
                       </div>
@@ -470,12 +472,11 @@ export default function Game() {
                 </div>
               </div>
 
-  {/* right column */}
-  <div className="side-name">
-    <h2 className="side-name-text side-right">{p2Name}</h2>
-  </div>
-</div>
-
+              {/* right column */}
+              <div className="side-name">
+                <h2 className="side-name-text side-right">{p2Name}</h2>
+              </div>
+            </div>
 
             <div className="controls">
               <button className="btn-magenta" onClick={returnToMenu}>

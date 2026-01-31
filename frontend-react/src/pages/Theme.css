@@ -1,38 +1,42 @@
 /* shared cyber theme to reuse on the pages */
 
-:root{
+:root {
   /* page background layers */
   --bg:
-    radial-gradient(900px 500px at 50% -10%, rgba(90,255,214,0.14) 0%, rgba(0,0,0,0) 60%),
-    radial-gradient(900px 500px at 90% 10%, rgba(126,87,255,0.18) 0%, rgba(0,0,0,0) 60%),
-    radial-gradient(900px 500px at 10% 20%, rgba(255,70,146,0.12) 0%, rgba(0,0,0,0) 60%),
+    radial-gradient(900px 500px at 50% -10%, rgba(90, 255, 214, 0.14) 0%, rgba(0, 0, 0, 0) 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(126, 87, 255, 0.18) 0%, rgba(0, 0, 0, 0) 60%),
+    radial-gradient(900px 500px at 10% 20%, rgba(255, 70, 146, 0.12) 0%, rgba(0, 0, 0, 0) 60%),
     linear-gradient(180deg, #05060a 0%, #070810 45%, #05050a 100%);
 
   /* basic colors */
   --text: #e6e9f2;
   --muted: #aab1c3;
-  --border: rgba(255,255,255,0.10);
-  --glass: rgba(10,12,18,0.65);
+  --border: rgba(255, 255, 255, 0.1);
+  --glass: rgba(10, 12, 18, 0.65);
 
   /* fonts */
-  --mono: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --mono: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* magenta accent */
-  --magenta-b: rgba(255,110,166,0.40);
-  --magenta-bg: linear-gradient(180deg, rgba(255,110,166,0.22) 0%, rgba(255,110,166,0.10) 100%);
+  --magenta-b: rgba(255, 110, 166, 0.4);
+  --magenta-bg: linear-gradient(
+    180deg,
+    rgba(255, 110, 166, 0.22) 0%,
+    rgba(255, 110, 166, 0.1) 100%
+  );
   --magenta-t: #ffd1e2;
 
   /* cyan accent */
   --cyan-t: #6ee7ff;
-  --cyan-glow: rgba(110,231,255,0.25);
+  --cyan-glow: rgba(110, 231, 255, 0.25);
 
   /* shadows */
-  --shadow-panel: 0 18px 60px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.04);
-  --shadow-card: 0 12px 36px rgba(0,0,0,0.45);
+  --shadow-panel: 0 18px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.45);
 }
 
 /* full screen page wrapper */
-.cyber-page{
+.cyber-page {
   min-height: 100vh;
   padding: 28px 14px;
   display: flex;
@@ -40,12 +44,20 @@
   align-items: center;
   background: var(--bg);
   color: var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-    "Apple Color Emoji", "Segoe UI Emoji";
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    'Apple Color Emoji',
+    'Segoe UI Emoji';
 }
 
 /* width limiter */
-.cyber-wrap{
+.cyber-wrap {
   width: 100%;
   max-width: 1120px;
   display: flex;
@@ -53,7 +65,7 @@
 }
 
 /* glass panel container */
-.cyber-panel{
+.cyber-panel {
   width: 100%;
   max-width: 980px;
   border-radius: 18px;
@@ -65,22 +77,22 @@
 }
 
 /* headings in cyber monospace */
-.cyber-title{
+.cyber-title {
   margin: 0;
   font-size: 28px;
   letter-spacing: 0.8px;
   font-weight: 900;
   font-family: var(--mono);
-  text-shadow: 0 0 14px rgba(90,255,214,0.15);
+  text-shadow: 0 0 14px rgba(90, 255, 214, 0.15);
 }
 
 /* small status badge */
-.cyber-pill{
+.cyber-pill {
   font-size: 12px;
   letter-spacing: 0.6px;
   text-transform: uppercase;
   color: #b7bed3;
-  background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
   border: 1px solid var(--border);
   padding: 7px 10px;
   border-radius: 999px;
@@ -88,7 +100,7 @@
 }
 
 /* primary magenta button */
-.btn-magenta{
+.btn-magenta {
   padding: 11px 18px;
   border-radius: 12px;
   cursor: pointer;
@@ -97,56 +109,58 @@
   border: 1px solid var(--magenta-b);
   background: var(--magenta-bg);
   color: var(--magenta-t);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 26px rgba(255,110,166,0.12);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 26px rgba(255, 110, 166, 0.12);
   font-family: var(--mono);
 }
 
 /* secondary neutral button */
-.btn-ghost{
+.btn-ghost {
   padding: 11px 18px;
   border-radius: 12px;
   cursor: pointer;
   font-weight: 900;
   letter-spacing: 0.4px;
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
   color: var(--text);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
   font-family: var(--mono);
 }
 
 /* reusable glass card */
-.card-glass{
+.card-glass {
   border-radius: 16px;
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
   box-shadow: var(--shadow-card);
 }
 
 /* subtle helper text */
-.text-muted{
+.text-muted {
   color: var(--muted);
 }
 
 /* consistent input styling */
-.cyber-input{
+.cyber-input {
   width: 100%;
   padding: 12px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
   color: var(--text);
   outline: none;
   font-family: var(--mono);
 }
 
-.cyber-input:focus{
-  border-color: rgba(110,231,255,0.35);
-  box-shadow: 0 0 0 3px rgba(110,231,255,0.10);
+.cyber-input:focus {
+  border-color: rgba(110, 231, 255, 0.35);
+  box-shadow: 0 0 0 3px rgba(110, 231, 255, 0.1);
 }
 
 /* small label above inputs */
-.cyber-label{
+.cyber-label {
   font-size: 12px;
   letter-spacing: 0.5px;
   text-transform: uppercase;

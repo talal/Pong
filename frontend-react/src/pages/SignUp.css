@@ -1,88 +1,88 @@
-.signup-panel{
+.signup-panel {
   max-width: 520px;
 }
 
-.signup-topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+.signup-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 18px;
 }
 
-.signup-form{
-  display:flex;
-  flex-direction:column;
+.signup-form {
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 
-.signup-field{
-  display:flex;
-  flex-direction:column;
+.signup-field {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
-.signup-btn{
+.signup-btn {
   width: 100%;
 }
 
-.signup-link{
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.signup-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.signup-help{
+.signup-help {
   font-size: 12px;
   line-height: 1.35;
 }
 
 /* custom style file inputs */
-.signup-file{
+.signup-file {
   width: 100%;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
   color: var(--text);
   font-family: var(--mono);
 }
 
-.signup-file::file-selector-button{
+.signup-file::file-selector-button {
   margin-right: 12px;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(110,231,255,0.34);
+  border: 1px solid rgba(110, 231, 255, 0.34);
   background:
-    radial-gradient(520px 160px at 30% 0%, rgba(110,231,255,0.18) 0%, rgba(0,0,0,0) 60%),
-    linear-gradient(180deg, rgba(110,231,255,0.12) 0%, rgba(110,231,255,0.05) 100%);
+    radial-gradient(520px 160px at 30% 0%, rgba(110, 231, 255, 0.18) 0%, rgba(0, 0, 0, 0) 60%),
+    linear-gradient(180deg, rgba(110, 231, 255, 0.12) 0%, rgba(110, 231, 255, 0.05) 100%);
   color: #ccf6ff;
   font-family: var(--mono);
   font-weight: 900;
   letter-spacing: 0.2px;
   cursor: pointer;
   box-shadow:
-    0 0 18px rgba(110,231,255,0.10),
-    inset 0 0 0 1px rgba(255,255,255,0.04);
+    0 0 18px rgba(110, 231, 255, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
-.signup-file::file-selector-button:hover{
-  border-color: rgba(110,231,255,0.45);
+.signup-file::file-selector-button:hover {
+  border-color: rgba(110, 231, 255, 0.45);
   box-shadow:
-    0 0 22px rgba(110,231,255,0.14),
-    inset 0 0 0 1px rgba(255,255,255,0.06);
+    0 0 22px rgba(110, 231, 255, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 /* safari fallback for the native file button */
-.signup-file::-webkit-file-upload-button{
+.signup-file::-webkit-file-upload-button {
   margin-right: 12px;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(110,231,255,0.34);
+  border: 1px solid rgba(110, 231, 255, 0.34);
   background:
-    radial-gradient(520px 160px at 30% 0%, rgba(110,231,255,0.18) 0%, rgba(0,0,0,0) 60%),
-    linear-gradient(180deg, rgba(110,231,255,0.12) 0%, rgba(110,231,255,0.05) 100%);
+    radial-gradient(520px 160px at 30% 0%, rgba(110, 231, 255, 0.18) 0%, rgba(0, 0, 0, 0) 60%),
+    linear-gradient(180deg, rgba(110, 231, 255, 0.12) 0%, rgba(110, 231, 255, 0.05) 100%);
   color: #ccf6ff;
   font-family: var(--mono);
   font-weight: 900;
@@ -90,20 +90,20 @@
   cursor: pointer;
 }
 
-.signup-alert{
+.signup-alert {
   padding: 12px;
   font-family: var(--mono);
   letter-spacing: 0.2px;
 }
 
-.signup-alert-error{
+.signup-alert-error {
   color: #ffd1dc;
-  border-color: rgba(255, 90, 120, 0.30);
-  background: linear-gradient(180deg, rgba(255,90,120,0.12) 0%, rgba(255,90,120,0.05) 100%);
+  border-color: rgba(255, 90, 120, 0.3);
+  background: linear-gradient(180deg, rgba(255, 90, 120, 0.12) 0%, rgba(255, 90, 120, 0.05) 100%);
 }
 
-.signup-alert-success{
+.signup-alert-success {
   color: #bfffe8;
-  border-color: rgba(90,255,214,0.26);
-  background: linear-gradient(180deg, rgba(90,255,214,0.10) 0%, rgba(90,255,214,0.04) 100%);
+  border-color: rgba(90, 255, 214, 0.26);
+  background: linear-gradient(180deg, rgba(90, 255, 214, 0.1) 0%, rgba(90, 255, 214, 0.04) 100%);
 }

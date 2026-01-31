@@ -1,6 +1,5 @@
 # Pong Frontend (React)
 
-
 ## Run (dev)
 
 From this folder:
@@ -10,8 +9,7 @@ npm install
 npm run dev
 ```
 
-This runs on http://localhost:5174 and proxies `/api` to `http://localhost:8080` 
-
+This runs on http://localhost:5174 and proxies `/api` to `http://localhost:8080`
 
 ## Backend requirements
 
