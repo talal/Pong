@@ -4,6 +4,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Represents a player in the Pong game.
+ */
 @Getter
 @Setter
 public class GamePlayer {
@@ -16,6 +19,12 @@ public class GamePlayer {
     private int score;
     private double y; // Paddle vertical position
 
+    /**
+     * Creates a new game player.
+     *
+     * @param sessionId the WebSocket session ID
+     * @param username the player's username
+     */
     public GamePlayer(String sessionId, String username) {
         this.sessionId = sessionId;
         this.username = username;
