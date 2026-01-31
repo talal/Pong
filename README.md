@@ -6,6 +6,9 @@
 - Lefhal-Lalaoui, Mohammed (mohammed.lefhal-lalaoui@stud.th-luebeck.de)
 - Omarov, Roman (roman.omarov@stud.th-luebeck.de)
 
+## Screencast
+<https://mega.nz/file/bUQDkYLa#K0eS7peAd76MrM4BnBeNIOTnUqaQFuMEwxJbmO2npcI>
+
 ## Backend (`/backend`)
 
 Built with **Java 25** and **Spring Boot 3.5**.
