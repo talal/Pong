@@ -23,6 +23,14 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+/**
+ * REST controller for JWT-based authentication operations.
+ * <p>
+ * Handles user signup with optional avatar upload, login with JWT token generation,
+ * token refresh, and logout with token blacklisting. All endpoints are publicly
+ * accessible and do not require prior authentication.
+ * </p>
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class JwtAuthController {
@@ -33,6 +41,16 @@ public class JwtAuthController {
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructs a new JwtAuthController with required dependencies.
+     *
+     * @param am the authentication manager for credential verification
+     * @param jts the JWT token service for token generation and parsing
+     * @param jbs the JWT blacklist service for token revocation
+     * @param uds the user details service for loading user information
+     * @param repo the user repository for database access
+     * @param enc the password encoder for secure password hashing
+     */
     public JwtAuthController(
             AuthenticationManager am,
             JwtTokenService jts,
@@ -49,8 +67,28 @@ public class JwtAuthController {
         this.passwordEncoder = enc;
     }
 
+    /**
+     * Response record for successful signup operations.
+     *
+     * @param message confirmation message
+     */
     public record SignupResponse(String message) {}
 
+    /**
+     * Handles user registration with optional avatar upload.
+     * <p>
+     * Creates a new user account with the provided email and password. Optionally
+     * accepts a profile picture that must meet validation criteria: PNG or JPEG format,
+     * under 1 MiB, and dimensions smaller than 3000x3000px. Passwords are hashed
+     * using BCrypt before storage.
+     * </p>
+     *
+     * @param email the user's email address (used as username)
+     * @param password the user's plain-text password
+     * @param file optional profile picture file
+     * @return 201 Created with success message, 400 Bad Request for validation errors,
+     *         or 409 Conflict if email already exists
+     */
     @PostMapping("/process_signup")
     public ResponseEntity<?> signup(
             @RequestParam("email") String email,
@@ -88,10 +126,18 @@ public class JwtAuthController {
         return ResponseEntity.status(201).body(new SignupResponse("User created"));
     }
 
-    // These image constraints are arbitrary. I got them from GitHub because they seem reasonable
-    // enough.
-    // Reference:
-    // https://docs.github.com/en/account-and-profile/reference/profile-reference#profile-picture-requirements
+    /**
+     * Validates an uploaded profile picture against size, format, and dimension constraints.
+     * <p>
+     * Validation rules follow GitHub's profile picture requirements:
+     * file size under 1 MiB, PNG or JPEG format only, and dimensions smaller than 3000x3000px.
+     * </p>
+     *
+     * @param file the uploaded image file to validate
+     * @throws IllegalArgumentException if the image fails validation
+     * @throws IOException if the image cannot be read
+     * @see <a href="https://docs.github.com/en/account-and-profile/reference/profile-reference#profile-picture-requirements">GitHub Profile Picture Requirements</a>
+     */
     private void validateImage(MultipartFile file) throws IOException {
         // Check Size (already handled by server config, but good to be explicit)
         if (file.getSize() > 1024 * 1024) { // 1 MiB
@@ -114,12 +160,40 @@ public class JwtAuthController {
         }
     }
 
+    /**
+     * Request record for login operations.
+     *
+     * @param email the user's email address
+     * @param password the user's password
+     */
     public record LoginRequest(String email, String password) {}
 
+    /**
+     * Response record for successful authentication.
+     *
+     * @param accessToken the JWT access token
+     * @param expiresIn token lifetime in seconds
+     */
     public record TokenResponse(String accessToken, long expiresIn) {}
 
+    /**
+     * Response record for authentication errors.
+     *
+     * @param error the error message
+     */
     public record ErrorResponse(String error) {}
 
+    /**
+     * Handles user login and JWT token generation.
+     * <p>
+     * Authenticates the user with provided credentials and returns a JWT access token
+     * upon successful authentication. The token can be used for subsequent authenticated
+     * requests via the Authorization header.
+     * </p>
+     *
+     * @param req the login credentials
+     * @return 200 OK with JWT token and expiration time, or 401 Unauthorized for invalid credentials
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
         try {
@@ -135,6 +209,16 @@ public class JwtAuthController {
         }
     }
 
+    /**
+     * Refreshes an existing JWT token before expiration.
+     * <p>
+     * Blacklists the old token and generates a new one with extended validity.
+     * The Authorization header must contain the current valid token in Bearer format.
+     * </p>
+     *
+     * @param token the current JWT token from the Authorization header
+     * @return 200 OK with new JWT token
+     */
     @PostMapping("/refresh-token")
     public ResponseEntity<String> refreshToken(@RequestHeader("Authorization") String token) {
         if (token != null && token.startsWith("Bearer ")) {
@@ -156,6 +240,16 @@ public class JwtAuthController {
         return ResponseEntity.ok(newToken);
     }
 
+    /**
+     * Handles user logout by invalidating the JWT token.
+     * <p>
+     * Adds the provided token to the blacklist, preventing its further use for authentication.
+     * The Authorization header must contain the token in Bearer format.
+     * </p>
+     *
+     * @param token the JWT token from the Authorization header
+     * @return 200 OK with empty response
+     */
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestHeader("Authorization") String token) {
         // extract token from header

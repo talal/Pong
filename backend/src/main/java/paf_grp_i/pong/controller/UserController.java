@@ -17,6 +17,14 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+/**
+ * REST controller for user account management operations.
+ * <p>
+ * Provides endpoints for authenticated users to change their password,
+ * upload or update their profile avatar, and retrieve avatar images.
+ * All operations require prior authentication via JWT token.
+ * </p>
+ */
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -24,14 +32,38 @@ public class UserController {
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructs a new UserController with required dependencies.
+     *
+     * @param userRepo the user repository for database access
+     * @param passwordEncoder the password encoder for secure password hashing
+     */
     public UserController(UserRepository userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
-    // Change Password
+    /**
+     * Request record for password change operations.
+     *
+     * @param oldPassword the user's current password for verification
+     * @param newPassword the desired new password
+     */
     public record ChangePasswordRequest(String oldPassword, String newPassword) {}
 
+    /**
+     * Handles password change requests for authenticated users.
+     * <p>
+     * Verifies the old password, validates the new password, and updates the
+     * user's password with BCrypt hashing. The old password must match the
+     * current password, and the new password cannot be empty.
+     * </p>
+     *
+     * @param req the password change request containing old and new passwords
+     * @param auth the authentication object containing the user's email
+     * @return 200 OK with success message, 400 Bad Request for validation errors,
+     *         or 404 Not Found if user doesn't exist
+     */
     @PostMapping("/change_password")
     public ResponseEntity<?> changePassword(
             @RequestBody ChangePasswordRequest req, Authentication auth) {
@@ -57,7 +89,18 @@ public class UserController {
         return ResponseEntity.ok(Map.of("message", "Password changed successfully"));
     }
 
-    // Upload/Update Avatar
+    /**
+     * Handles avatar upload or update for authenticated users.
+     * <p>
+     * Accepts a profile picture that must meet validation criteria: PNG or JPEG format,
+     * under 1 MiB, and dimensions smaller than 3000x3000px. Replaces any existing avatar.
+     * </p>
+     *
+     * @param file the uploaded image file
+     * @param auth the authentication object containing the user's email
+     * @return 200 OK with success message, 400 Bad Request for validation errors,
+     *         404 Not Found if user doesn't exist, or 500 Internal Server Error for processing failures
+     */
     @PostMapping("/avatar")
     public ResponseEntity<?> uploadAvatar(
             @RequestParam("file") MultipartFile file, Authentication auth) {
@@ -80,7 +123,19 @@ public class UserController {
         }
     }
 
-    // Serve Avatar
+    /**
+     * Retrieves a user's avatar image.
+     * <p>
+     * If an email parameter is provided, returns that user's avatar (useful for viewing
+     * other players' profiles). Otherwise, returns the authenticated user's own avatar.
+     * The response includes the appropriate content type (PNG or JPEG).
+     * </p>
+     *
+     * @param email optional email of the user whose avatar to retrieve
+     * @param auth the authentication object containing the requesting user's email
+     * @return 200 OK with image data and content type, or 404 Not Found if user doesn't
+     *         exist or has no avatar
+     */
     @GetMapping("/avatar")
     public ResponseEntity<byte[]> getAvatar(
             @RequestParam(value = "email", required = false) String email, Authentication auth) {
@@ -97,7 +152,17 @@ public class UserController {
                 .body(user.getAvatar());
     }
 
-    // Reuse validation logic from JWTAuthController.
+    /**
+     * Validates an uploaded profile picture against size, format, and dimension constraints.
+     * <p>
+     * Validation rules: file size under 1 MiB, PNG or JPEG format only, and dimensions
+     * smaller than 3000x3000px. This mirrors the validation used during signup.
+     * </p>
+     *
+     * @param file the uploaded image file to validate
+     * @throws IllegalArgumentException if the image fails validation
+     * @throws IOException if the image cannot be read
+     */
     private void validateImage(MultipartFile file) throws IOException {
         if (file.getSize() > 1024 * 1024) {
             throw new IllegalArgumentException("Image size must be less than 1 MB");
