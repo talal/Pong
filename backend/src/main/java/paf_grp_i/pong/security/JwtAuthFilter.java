@@ -17,6 +17,15 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * JWT authentication filter that intercepts HTTP requests to validate and process
+ * JWT tokens for Spring Security authentication.
+ * <p>
+ * This filter extracts JWT tokens from the Authorization header, validates them,
+ * checks against a blacklist, and sets up the security context for authenticated users.
+ * It extends {@link OncePerRequestFilter} to ensure single execution per request.
+ * </p>
+ */
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
@@ -24,6 +33,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final JwtBlacklistService jwtBlacklistService;
 
+    /**
+     * Constructs a new JwtAuthFilter with required dependencies.
+     *
+     * @param jwtTokenService service for JWT token validation and parsing
+     * @param userDetailsService service for loading user details by username
+     * @param jwtBlacklistService service for checking revoked tokens
+     */
     public JwtAuthFilter(
             JwtTokenService jwtTokenService,
             UserDetailsService userDetailsService,
@@ -33,6 +49,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         this.jwtBlacklistService = jwtBlacklistService;
     }
 
+    /**
+     * Filters incoming requests to authenticate users via JWT tokens.
+     * <p>
+     * This method extracts the JWT from the Authorization header, validates it,
+     * checks if it's blacklisted, and establishes authentication in the security context
+     * if valid. Invalid or expired tokens result in clearing the security context.
+     * </p>
+     *
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @param filterChain the filter chain to continue request processing
+     * @throws ServletException if a servlet error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -66,6 +96,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Determines if this filter should skip processing for specific request paths.
+     * <p>
+     * The filter is bypassed for authentication endpoints and static resources
+     * (CSS, JavaScript, images) to avoid unnecessary token validation overhead.
+     * </p>
+     *
+     * @param request the HTTP request to evaluate
+     * @return {@code true} if the filter should not process this request, {@code false} otherwise
+     */
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String p = request.getServletPath();
