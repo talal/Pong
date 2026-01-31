@@ -16,6 +16,15 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * Service for managing Pong game sessions, matchmaking, and real-time gameplay.
+ * <p>
+ * This service handles player matchmaking through a waiting queue, maintains active
+ * game sessions, processes player input, runs the game physics loop at approximately
+ * 60 FPS, and persists game results to the database. All game state updates are
+ * broadcasted to clients via WebSocket.
+ * </p>
+ */
 @Service
 public class GameService {
 
@@ -32,8 +41,16 @@ public class GameService {
     @Autowired private UserRepository userRepository;
 
     /**
-     * Attempts to join a player to a game.
-     * If a player is waiting, matches them. Otherwise, puts this player in the waiting queue.
+     * Attempts to join a player to a game through matchmaking.
+     * <p>
+     * If another player is waiting in the queue, creates a new game between them.
+     * Otherwise, adds this player to the waiting queue. Players already in a game
+     * are ignored to prevent duplicate joins.
+     * </p>
+     *
+     * @param sessionId the WebSocket session ID of the player
+     * @param username the username of the player
+     * @return the created {@link Game} if matched, or {@code null} if added to waiting queue
      */
     public synchronized Game joinGame(String sessionId, String username) {
         // If player is already in a game, ignore
@@ -72,6 +89,13 @@ public class GameService {
 
     /**
      * Handles paddle movement input from a client.
+     * <p>
+     * Updates the vertical position of the player's paddle in their active game.
+     * Ignores input if the player is not in a game or the game is not in progress.
+     * </p>
+     *
+     * @param sessionId the WebSocket session ID of the player
+     * @param y the new vertical position of the paddle (0-100 coordinate system)
      */
     public void movePaddle(String sessionId, double y) {
         String gameId = playerGameMap.get(sessionId);
@@ -89,7 +113,14 @@ public class GameService {
     }
 
     /**
-     * Handles player disconnection.
+     * Handles player disconnection from a game or waiting queue.
+     * <p>
+     * If the player is waiting, removes them from the queue. If in an active game,
+     * ends the game immediately, awards the remaining player a win (score set to 11),
+     * persists the result, and notifies the opponent via WebSocket.
+     * </p>
+     *
+     * @param sessionId the WebSocket session ID of the disconnected player
      */
     public void playerDisconnected(String sessionId) {
         // If waiting, just remove from queue
@@ -130,8 +161,12 @@ public class GameService {
     }
 
     /**
-     * THE GAME LOOP
-     * Runs every ~17ms (approx 60 FPS) to update physics.
+     * The main game loop that updates physics for all active games.
+     * <p>
+     * Runs every approximately 17ms (about 60 FPS) to update ball position,
+     * detect collisions, handle scoring, and broadcast updated game state
+     * to all subscribed clients via WebSocket.
+     * </p>
      */
     @Scheduled(fixedRate = 17)
     public void gameLoop() {
@@ -144,7 +179,15 @@ public class GameService {
         }
     }
 
-    // Check when a player reaches 11 points.
+    /**
+     * Checks if either player has reached the winning score of 11 points.
+     * <p>
+     * If a win condition is met, sets the game state to FINISHED and
+     * persists the game result to the database.
+     * </p>
+     *
+     * @param game the game to check
+     */
     private void checkWinCondition(Game game) {
         if (game.getPlayer1().getScore() >= 11 || game.getPlayer2().getScore() >= 11) {
             game.setState(GameState.FINISHED);
@@ -152,6 +195,15 @@ public class GameService {
         }
     }
 
+    /**
+     * Persists game results to the database by updating player statistics.
+     * <p>
+     * Increments games played for both players and games won for the winner.
+     * This method runs in a transaction to ensure data consistency.
+     * </p>
+     *
+     * @param game the completed game whose results should be saved
+     */
     @Transactional
     protected void persistGameResult(Game game) {
         User p1 = userRepository.findByEmail(game.getPlayer1().getUsername());
@@ -172,6 +224,15 @@ public class GameService {
         }
     }
 
+    /**
+     * Updates game physics including ball movement, collision detection, and scoring.
+     * <p>
+     * Handles ball-wall collisions, ball-paddle collisions, goal detection,
+     * and win condition checking. Ball speed increases slightly with each paddle hit.
+     * </p>
+     *
+     * @param game the game to update
+     */
     private void updatePhysics(Game game) {
         // Move Ball
         game.setBallX(game.getBallX() + game.getBallDX());
@@ -210,6 +271,15 @@ public class GameService {
         }
     }
 
+    /**
+     * Resets the ball to center position after a goal.
+     * <p>
+     * Places the ball at coordinates (50, 50) and resets velocity to initial values.
+     * The horizontal direction is reversed from the previous serve.
+     * </p>
+     *
+     * @param game the game whose ball should be reset
+     */
     private void resetBall(Game game) {
         game.setBallX(50);
         game.setBallY(50);
