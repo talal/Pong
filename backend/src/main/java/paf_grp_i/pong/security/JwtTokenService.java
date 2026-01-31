@@ -17,11 +17,11 @@ import javax.crypto.SecretKey;
 
 /**
  * Service for generating, parsing, and validating JWT tokens.
- * <p>
+ *
  * This service uses HMAC-SHA256 (HS256) for token signing and requires a
  * base64-encoded secret key of at least 256 bits configured in application properties.
  * Tokens include the username as the subject and have a configurable expiration time.
- * </p>
+ *
  */
 @Service
 public class JwtTokenService {
@@ -51,11 +51,11 @@ public class JwtTokenService {
 
     /**
      * Generates a new JWT token for the specified user.
-     * <p>
+     *
      * The token includes the username as the subject, current timestamp as issued-at,
      * and an expiration time based on the configured duration. The token is signed
      * using HS256 with the configured secret key.
-     * </p>
+     *
      *
      * @param user the user details containing the username
      * @return a compact, signed JWT token string
@@ -73,10 +73,10 @@ public class JwtTokenService {
 
     /**
      * Parses and validates a JWT token, returning its claims.
-     * <p>
+     *
      * This method verifies the token signature and expiration. If the token
      * is invalid, expired, or malformed, a {@link JwtException} is thrown.
-     * </p>
+     *
      *
      * @param token the JWT token string to parse
      * @return the {@link Claims} extracted from the token

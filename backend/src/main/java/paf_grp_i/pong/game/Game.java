@@ -9,11 +9,11 @@ import java.util.UUID;
 /**
  * Represents a Pong game instance.
  *
- * <p>This class encapsulates the complete state of a Pong game, including both players, the ball
+ * This class encapsulates the complete state of a Pong game, including both players, the ball
  * position and velocity, and the current game state. Each game is assigned a unique identifier upon
  * creation.
  *
- * <p>Coordinate system: All positions use a normalized range from 0.0 to 100.0 for both X and Y
+ * Coordinate system: All positions use a normalized range from 0.0 to 100.0 for both X and Y
  * axes.
  */
 @Getter
@@ -35,7 +35,7 @@ public class Game {
     /**
      * Constructs a new {@code Game} instance.
      *
-     * <p>Initializes the game with a randomly generated unique identifier and sets the initial
+     * Initializes the game with a randomly generated unique identifier and sets the initial
      * state to {@link GameState#WAITING_FOR_PLAYER}.
      */
     public Game() {

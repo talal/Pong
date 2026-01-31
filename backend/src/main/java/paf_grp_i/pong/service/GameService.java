@@ -18,12 +18,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Service for managing Pong game sessions, matchmaking, and real-time gameplay.
- * <p>
+ *
  * This service handles player matchmaking through a waiting queue, maintains active
  * game sessions, processes player input, runs the game physics loop at approximately
  * 60 FPS, and persists game results to the database. All game state updates are
  * broadcasted to clients via WebSocket.
- * </p>
+ *
  */
 @Service
 public class GameService {
@@ -42,11 +42,11 @@ public class GameService {
 
     /**
      * Attempts to join a player to a game through matchmaking.
-     * <p>
+     *
      * If another player is waiting in the queue, creates a new game between them.
      * Otherwise, adds this player to the waiting queue. Players already in a game
      * are ignored to prevent duplicate joins.
-     * </p>
+     *
      *
      * @param sessionId the WebSocket session ID of the player
      * @param username the username of the player
@@ -89,10 +89,10 @@ public class GameService {
 
     /**
      * Handles paddle movement input from a client.
-     * <p>
+     *
      * Updates the vertical position of the player's paddle in their active game.
      * Ignores input if the player is not in a game or the game is not in progress.
-     * </p>
+     *
      *
      * @param sessionId the WebSocket session ID of the player
      * @param y the new vertical position of the paddle (0-100 coordinate system)
@@ -114,11 +114,11 @@ public class GameService {
 
     /**
      * Handles player disconnection from a game or waiting queue.
-     * <p>
+     *
      * If the player is waiting, removes them from the queue. If in an active game,
      * ends the game immediately, awards the remaining player a win (score set to 11),
      * persists the result, and notifies the opponent via WebSocket.
-     * </p>
+     *
      *
      * @param sessionId the WebSocket session ID of the disconnected player
      */
@@ -162,11 +162,11 @@ public class GameService {
 
     /**
      * The main game loop that updates physics for all active games.
-     * <p>
+     *
      * Runs every approximately 17ms (about 60 FPS) to update ball position,
      * detect collisions, handle scoring, and broadcast updated game state
      * to all subscribed clients via WebSocket.
-     * </p>
+     *
      */
     @Scheduled(fixedRate = 17)
     public void gameLoop() {
@@ -181,10 +181,10 @@ public class GameService {
 
     /**
      * Checks if either player has reached the winning score of 11 points.
-     * <p>
+     *
      * If a win condition is met, sets the game state to FINISHED and
      * persists the game result to the database.
-     * </p>
+     *
      *
      * @param game the game to check
      */
@@ -197,10 +197,10 @@ public class GameService {
 
     /**
      * Persists game results to the database by updating player statistics.
-     * <p>
+     *
      * Increments games played for both players and games won for the winner.
      * This method runs in a transaction to ensure data consistency.
-     * </p>
+     *
      *
      * @param game the completed game whose results should be saved
      */
@@ -226,10 +226,10 @@ public class GameService {
 
     /**
      * Updates game physics including ball movement, collision detection, and scoring.
-     * <p>
+     *
      * Handles ball-wall collisions, ball-paddle collisions, goal detection,
      * and win condition checking. Ball speed increases slightly with each paddle hit.
-     * </p>
+     *
      *
      * @param game the game to update
      */
@@ -273,10 +273,10 @@ public class GameService {
 
     /**
      * Resets the ball to center position after a goal.
-     * <p>
+     *
      * Places the ball at coordinates (50, 50) and resets velocity to initial values.
      * The horizontal direction is reversed from the previous serve.
-     * </p>
+     *
      *
      * @param game the game whose ball should be reset
      */

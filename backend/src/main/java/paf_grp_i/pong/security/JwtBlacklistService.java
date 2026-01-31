@@ -7,11 +7,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Service for managing a blacklist of revoked JWT tokens.
- * <p>
+ *
  * This service maintains an in-memory, thread-safe set of blacklisted tokens,
  * primarily used to invalidate tokens after logout or when revocation is required.
  * Tokens added to the blacklist are considered invalid for authentication purposes.
- * </p>
+ *
  */
 @Service
 public class JwtBlacklistService {
@@ -36,10 +36,10 @@ public class JwtBlacklistService {
 
     /**
      * Removes a JWT token from the blacklist.
-     * <p>
+     *
      * This is an optional operation that allows tokens to be un-revoked if needed.
      * This operation is thread-safe.
-     * </p>
+     *
      *
      * @param token the JWT token to remove from the blacklist
      */

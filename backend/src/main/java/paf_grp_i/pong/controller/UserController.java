@@ -19,11 +19,11 @@ import javax.imageio.ImageIO;
 
 /**
  * REST controller for user account management operations.
- * <p>
+ *
  * Provides endpoints for authenticated users to change their password,
  * upload or update their profile avatar, and retrieve avatar images.
  * All operations require prior authentication via JWT token.
- * </p>
+ *
  */
 @RestController
 @RequestMapping("/api/user")
@@ -53,11 +53,11 @@ public class UserController {
 
     /**
      * Handles password change requests for authenticated users.
-     * <p>
+     *
      * Verifies the old password, validates the new password, and updates the
      * user's password with BCrypt hashing. The old password must match the
      * current password, and the new password cannot be empty.
-     * </p>
+     *
      *
      * @param req the password change request containing old and new passwords
      * @param auth the authentication object containing the user's email
@@ -91,10 +91,10 @@ public class UserController {
 
     /**
      * Handles avatar upload or update for authenticated users.
-     * <p>
+     *
      * Accepts a profile picture that must meet validation criteria: PNG or JPEG format,
      * under 1 MiB, and dimensions smaller than 3000x3000px. Replaces any existing avatar.
-     * </p>
+     *
      *
      * @param file the uploaded image file
      * @param auth the authentication object containing the user's email
@@ -125,11 +125,11 @@ public class UserController {
 
     /**
      * Retrieves a user's avatar image.
-     * <p>
+     *
      * If an email parameter is provided, returns that user's avatar (useful for viewing
      * other players' profiles). Otherwise, returns the authenticated user's own avatar.
      * The response includes the appropriate content type (PNG or JPEG).
-     * </p>
+     *
      *
      * @param email optional email of the user whose avatar to retrieve
      * @param auth the authentication object containing the requesting user's email
@@ -154,10 +154,10 @@ public class UserController {
 
     /**
      * Validates an uploaded profile picture against size, format, and dimension constraints.
-     * <p>
+     *
      * Validation rules: file size under 1 MiB, PNG or JPEG format only, and dimensions
      * smaller than 3000x3000px. This mirrors the validation used during signup.
-     * </p>
+     *
      *
      * @param file the uploaded image file to validate
      * @throws IllegalArgumentException if the image fails validation

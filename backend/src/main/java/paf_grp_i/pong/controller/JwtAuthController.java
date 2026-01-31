@@ -25,11 +25,11 @@ import javax.imageio.ImageIO;
 
 /**
  * REST controller for JWT-based authentication operations.
- * <p>
+ *
  * Handles user signup with optional avatar upload, login with JWT token generation,
  * token refresh, and logout with token blacklisting. All endpoints are publicly
  * accessible and do not require prior authentication.
- * </p>
+ *
  */
 @RestController
 @RequestMapping("/api/auth")
@@ -76,12 +76,12 @@ public class JwtAuthController {
 
     /**
      * Handles user registration with optional avatar upload.
-     * <p>
+     *
      * Creates a new user account with the provided email and password. Optionally
      * accepts a profile picture that must meet validation criteria: PNG or JPEG format,
      * under 1 MiB, and dimensions smaller than 3000x3000px. Passwords are hashed
      * using BCrypt before storage.
-     * </p>
+     *
      *
      * @param email the user's email address (used as username)
      * @param password the user's plain-text password
@@ -128,10 +128,10 @@ public class JwtAuthController {
 
     /**
      * Validates an uploaded profile picture against size, format, and dimension constraints.
-     * <p>
+     *
      * Validation rules follow GitHub's profile picture requirements:
      * file size under 1 MiB, PNG or JPEG format only, and dimensions smaller than 3000x3000px.
-     * </p>
+     *
      *
      * @param file the uploaded image file to validate
      * @throws IllegalArgumentException if the image fails validation
@@ -185,11 +185,11 @@ public class JwtAuthController {
 
     /**
      * Handles user login and JWT token generation.
-     * <p>
+     *
      * Authenticates the user with provided credentials and returns a JWT access token
      * upon successful authentication. The token can be used for subsequent authenticated
      * requests via the Authorization header.
-     * </p>
+     *
      *
      * @param req the login credentials
      * @return 200 OK with JWT token and expiration time, or 401 Unauthorized for invalid credentials
@@ -211,10 +211,10 @@ public class JwtAuthController {
 
     /**
      * Refreshes an existing JWT token before expiration.
-     * <p>
+     *
      * Blacklists the old token and generates a new one with extended validity.
      * The Authorization header must contain the current valid token in Bearer format.
-     * </p>
+     *
      *
      * @param token the current JWT token from the Authorization header
      * @return 200 OK with new JWT token
@@ -242,10 +242,10 @@ public class JwtAuthController {
 
     /**
      * Handles user logout by invalidating the JWT token.
-     * <p>
+     *
      * Adds the provided token to the blacklist, preventing its further use for authentication.
      * The Authorization header must contain the token in Bearer format.
-     * </p>
+     *
      *
      * @param token the JWT token from the Authorization header
      * @return 200 OK with empty response
