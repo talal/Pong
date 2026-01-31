@@ -24,20 +24,47 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * Spring Security configuration for a stateless JWT-based authentication system.
+ * <p>
+ * This configuration disables session-based authentication and CSRF protection,
+ * enabling JWT token authentication for all secured endpoints. It includes CORS
+ * configuration for Vue.js frontend integration and defines public/protected routes.
+ * </p>
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+    /**
+     * Provides a custom user details service for loading user information.
+     *
+     * @return the {@link UserDetailsService} implementation
+     */
     @Bean
     protected UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
     }
 
+    /**
+     * Provides a BCrypt password encoder for secure password hashing.
+     *
+     * @return the {@link BCryptPasswordEncoder} instance
+     */
     @Bean
     protected BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configures the authentication provider using DAO-based authentication.
+     * <p>
+     * This provider uses the custom user details service and BCrypt password
+     * encoder for validating user credentials.
+     * </p>
+     *
+     * @return the configured {@link AuthenticationProvider}
+     */
     @Bean
     protected AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider =
@@ -46,7 +73,16 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
-    // CORS configuration for Vue.js (running on localhost:5173)
+    /**
+     * Configures CORS settings for the Vue.js frontend.
+     * <p>
+     * Allows requests from localhost:5173 and localhost:5174 with credentials,
+     * supporting GET, POST, PUT, DELETE, and OPTIONS methods. Accepts
+     * Authorization, Content-Type, and Accept headers.
+     * </p>
+     *
+     * @return the {@link CorsConfigurationSource} for all application paths
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
@@ -61,13 +97,33 @@ public class WebSecurityConfig {
         return source;
     }
 
+    /**
+     * Provides the authentication manager for processing authentication requests.
+     *
+     * @param config the Spring Security authentication configuration
+     * @return the {@link AuthenticationManager} instance
+     * @throws Exception if configuration fails
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
             throws Exception {
         return config.getAuthenticationManager();
     }
 
-    // Single Security Chain for the entire application (Stateless / JWT)
+    /**
+     * Configures the main security filter chain for stateless JWT authentication.
+     * <p>
+     * This chain disables CSRF, sessions, form login, basic auth, and logout,
+     * relying entirely on JWT tokens. It applies the JWT authentication filter
+     * before the standard username/password filter and configures route-based
+     * authorization rules.
+     * </p>
+     *
+     * @param http the {@link HttpSecurity} to configure
+     * @param jwtFilter the JWT authentication filter to apply
+     * @return the configured {@link SecurityFilterChain}
+     * @throws Exception if configuration fails
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtFilter)
             throws Exception {
@@ -87,7 +143,16 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    // Helper method to keep the main chain easy to read.
+    /**
+     * Configures authorization rules for HTTP requests.
+     * <p>
+     * Defines which endpoints are publicly accessible (authentication, static
+     * assets, WebSocket handshakes, preflight requests) and requires authentication
+     * for all other requests.
+     * </p>
+     *
+     * @param auth the authorization configuration registry
+     */
     private void configureAuth(
             AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry
                     auth) {
