@@ -1,4 +1,3 @@
-// frontend-react/src/pages/game.jsx
 // pong game screen
 // renders the canvas game view, connects to the backend websocket using stomp,
 // joins matchmaking, then receives game state updates from /topic/game/{gameId}.

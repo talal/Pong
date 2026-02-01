@@ -29,7 +29,7 @@ export default function ChangePassword() {
       })
 
       if (!resp.ok) {
-        // backend sometimes returns json {message|error}; fallback keeps it readable
+        // backend sometimes returns json {message/error}, fallback keeps it readable
         let msg = 'Error changing password'
         try {
           const j = await resp.json()

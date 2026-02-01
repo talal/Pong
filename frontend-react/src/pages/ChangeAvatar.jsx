@@ -33,7 +33,7 @@ export default function ChangeAvatar() {
       })
 
       if (!resp.ok) {
-        // backend may return json {message|error}; fallback keeps it readable
+        // backend may return json {message/error}, fallback keeps it readable
         let msg = 'Error uploading image'
         try {
           const j = await resp.json()
