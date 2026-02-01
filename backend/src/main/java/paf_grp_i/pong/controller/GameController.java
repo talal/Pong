@@ -18,10 +18,10 @@ import java.util.Map;
 
 /**
  * WebSocket controller for handling real-time Pong game interactions.
- * <p>
+ *
  * This controller manages game matchmaking requests, paddle movement updates,
  * and player disconnection events via STOMP over WebSocket protocol.
- * </p>
+ *
  */
 @Controller
 public class GameController {
@@ -32,12 +32,12 @@ public class GameController {
 
     /**
      * Handles game join requests from clients attempting to find a match.
-     * <p>
+     *
      * When a client sends a message to {@code /app/game.join}, this method attempts
      * to match them with another waiting player. If a match is found, both players
      * receive a private message at {@code /user/queue/match} containing the game ID
      * they should subscribe to for game updates.
-     * </p>
+     *
      *
      * @param headerAccessor accessor for WebSocket session metadata
      * @param principal the authenticated user principal, or null for anonymous users
@@ -67,12 +67,12 @@ public class GameController {
 
     /**
      * Handles paddle movement updates from clients.
-     * <p>
+     *
      * When a client sends a message to {@code /app/game.move} with a payload
      * containing the new paddle Y-coordinate, this method updates the player's
      * paddle position in their active game. The payload format is:
      * {@code { "y": 50.0 }}
-     * </p>
+     *
      *
      * @param payload the movement data containing the Y-coordinate
      * @param headerAccessor accessor for WebSocket session metadata
@@ -88,11 +88,11 @@ public class GameController {
 
     /**
      * Handles WebSocket disconnection events.
-     * <p>
+     *
      * When a player disconnects, this method notifies the game service to handle
      * cleanup, end the game if in progress, and award the remaining player a win.
      * This event is triggered automatically by the Spring WebSocket framework.
-     * </p>
+     *
      *
      * @param event the session disconnect event containing session information
      */

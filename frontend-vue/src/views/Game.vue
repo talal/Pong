@@ -163,7 +163,10 @@ onBeforeUnmount(() => {
 })
 
 function onKeyDown(e) {
-  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') keys[e.key] = true
+  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    e.preventDefault() // This stops the page from scrolling
+    keys[e.key] = true
+  }
 }
 
 function onKeyUp(e) {

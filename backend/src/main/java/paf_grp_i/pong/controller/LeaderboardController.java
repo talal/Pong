@@ -13,10 +13,10 @@ import java.util.Map;
 
 /**
  * REST controller for retrieving game leaderboard statistics.
- * <p>
+ *
  * Provides endpoints to view player rankings sorted by win rate,
  * displaying games played, games won, and win percentage for all users.
- * </p>
+ *
  */
 @RestController
 @RequestMapping("/api")
@@ -26,11 +26,11 @@ public class LeaderboardController {
 
     /**
      * Retrieves the leaderboard with all users sorted by win rate in descending order.
-     * <p>
+     *
      * Each entry includes the username (email), games played, games won, and win rate
      * formatted as a percentage. Users with no games played have a win rate of 0%.
      * The sorting is performed in-memory after fetching all users from the database.
-     * </p>
+     *
      *
      * @return a list of leaderboard entries, each containing user statistics as a map
      */
@@ -45,10 +45,10 @@ public class LeaderboardController {
 
     /**
      * Calculates the win rate for a user.
-     * <p>
+     *
      * Win rate is computed as games won divided by games played.
      * Returns 0.0 if the user has not played any games to avoid division by zero.
-     * </p>
+     *
      *
      * @param user the user whose win rate to calculate
      * @return the win rate as a decimal between 0.0 and 1.0
@@ -60,10 +60,10 @@ public class LeaderboardController {
 
     /**
      * Maps a user entity to a leaderboard entry representation.
-     * <p>
+     *
      * Creates a map containing the username (email), games won, games played,
      * and win rate formatted as a percentage string with one decimal place.
-     * </p>
+     *
      *
      * @param user the user to map
      * @return a map containing the user's leaderboard statistics

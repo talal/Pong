@@ -1,18 +1,25 @@
-
 .game-page {
-  min-height: 100vh; 
+  min-height: 100vh;
   padding: 28px 14px; /* outer spacing so the panel never touches edges */
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  color: #e6e9f2; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e6e9f2;
   background:
-    radial-gradient(900px 500px at 50% -10%, rgba(90, 255, 214, 0.14) 0%, rgba(0,0,0,0) 60%),
-    radial-gradient(900px 500px at 90% 10%, rgba(126, 87, 255, 0.18) 0%, rgba(0,0,0,0) 60%),
-    radial-gradient(900px 500px at 10% 20%, rgba(255, 70, 146, 0.12) 0%, rgba(0,0,0,0) 60%),
+    radial-gradient(900px 500px at 50% -10%, rgba(90, 255, 214, 0.14) 0%, rgba(0, 0, 0, 0) 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(126, 87, 255, 0.18) 0%, rgba(0, 0, 0, 0) 60%),
+    radial-gradient(900px 500px at 10% 20%, rgba(255, 70, 146, 0.12) 0%, rgba(0, 0, 0, 0) 60%),
     linear-gradient(180deg, #05060a 0%, #070810 45%, #05050a 100%); /* layered neonish background */
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-    "Apple Color Emoji", "Segoe UI Emoji";
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    'Apple Color Emoji',
+    'Segoe UI Emoji';
 }
 
 /* width limiter that keeps the panel centered on large screens */
@@ -30,8 +37,10 @@
   border-radius: 18px;
   padding: var(--panel-pad, 22px); /* js sets this smaller on short viewports */
   background: rgba(10, 12, 18, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(10px);
   max-height: calc(100vh - 56px); /* ensure everything stays accessible */
   overflow: auto; /* scroll if the viewport is very short */
@@ -49,7 +58,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px; 
+  gap: 12px;
 }
 
 /* title typography */
@@ -58,8 +67,8 @@
   font-size: 28px;
   letter-spacing: 0.8px;
   font-weight: 900;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  text-shadow: 0 0 14px rgba(90,255,214,0.15);
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-shadow: 0 0 14px rgba(90, 255, 214, 0.15);
 }
 
 /* status */
@@ -68,62 +77,60 @@
   letter-spacing: 0.6px;
   text-transform: uppercase;
   color: #b7bed3;
-  background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%);
-  border: 1px solid rgba(255,255,255,0.10);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 7px 10px;
   border-radius: 999px;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-
-.game-layout{
-  display:grid;
-  grid-template-columns: 42px auto 42px; 
-  justify-content:center;               
-  align-items:center;
+.game-layout {
+  display: grid;
+  grid-template-columns: 42px auto 42px;
+  justify-content: center;
+  align-items: center;
   gap: 30px;
-  padding: 0 10px;                     
+  padding: 0 10px;
 }
 
 /* side columns */
-.side-name{
+.side-name {
   width: 42px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: visible;
 }
 
 /* vertical names without transform baseline issues */
-.side-name-text{
-  margin:0;
-  font-weight:800;
-  letter-spacing:0.4px;
-  font-family:"Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size:16px;
-  white-space:nowrap;
+.side-name-text {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 16px;
+  white-space: nowrap;
 
-  writing-mode: vertical-rl;     
-  text-orientation: mixed;              
-  line-height:1;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  line-height: 1;
 }
 
 /* left reads bottom->top */
-.side-left{
+.side-left {
   transform: rotate(180deg);
-  color:#6ee7ff;
-  text-shadow:0 0 12px rgba(110,231,255,0.25);
-  margin-left:25px;
+  color: #6ee7ff;
+  text-shadow: 0 0 12px rgba(110, 231, 255, 0.25);
+  margin-left: 25px;
 }
 
 /* right reads top->bottom */
-.side-right{
-  transform:none;
-  color:#ff6ea6;
-  text-shadow:0 0 12px rgba(255,110,166,0.25);
+.side-right {
+  transform: none;
+  color: #ff6ea6;
+  text-shadow: 0 0 12px rgba(255, 110, 166, 0.25);
   margin-right: 25px;
 }
-
 
 /* center column that holds the neon frame; flex keeps it centered even if content changes */
 .center-cell {
@@ -138,15 +145,15 @@
   padding: 10px; /* thickness of neon border */
   background: linear-gradient(
     135deg,
-    rgba(110,231,255,0.22),
-    rgba(126,87,255,0.18),
-    rgba(255,110,166,0.20)
+    rgba(110, 231, 255, 0.22),
+    rgba(126, 87, 255, 0.18),
+    rgba(255, 110, 166, 0.2)
   );
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.06),
-    0 18px 60px rgba(0,0,0,0.55),
-    0 0 44px rgba(110,231,255,0.12),
-    0 0 44px rgba(255,110,166,0.10);
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 18px 60px rgba(0, 0, 0, 0.55),
+    0 0 44px rgba(110, 231, 255, 0.12),
+    0 0 44px rgba(255, 110, 166, 0.1);
   width: fit-content; /* shrink-wrap to the canvas size */
   margin: 0 auto; /* additional safety centering */
   display: flex;
@@ -157,8 +164,8 @@
 .canvas-inner {
   border-radius: 14px;
   padding: 6px;
-  background: rgba(0,0,0,0.55);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   position: relative; /* overlay uses absolute positioning inside this box */
   display: flex;
   justify-content: center;
@@ -171,7 +178,7 @@
   border-radius: 12px;
   background: #05060a;
   cursor: none;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
   width: var(--canvas-w, 800px);
   height: var(--canvas-h, 500px);
 }
@@ -186,11 +193,11 @@
   justify-content: center;
   text-align: center;
   background:
-    radial-gradient(700px 320px at 50% 40%, rgba(255,110,166,0.12) 0%, rgba(0,0,0,0) 55%),
-    radial-gradient(700px 320px at 50% 60%, rgba(110,231,255,0.10) 0%, rgba(0,0,0,0) 55%),
-    linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.62) 100%);
+    radial-gradient(700px 320px at 50% 40%, rgba(255, 110, 166, 0.12) 0%, rgba(0, 0, 0, 0) 55%),
+    radial-gradient(700px 320px at 50% 60%, rgba(110, 231, 255, 0.1) 0%, rgba(0, 0, 0, 0) 55%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.62) 100%);
   backdrop-filter: blur(2px);
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   pointer-events: none; /* overlay should not block key input */
 }
 
@@ -204,9 +211,11 @@
   margin: 0;
   font-weight: 900;
   letter-spacing: 1.2px;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: clamp(34px, 5.8vw, 56px); /* scales down on small screens */
-  text-shadow: 0 0 18px rgba(110,231,255,0.18), 0 0 18px rgba(255,110,166,0.16);
+  text-shadow:
+    0 0 18px rgba(110, 231, 255, 0.18),
+    0 0 18px rgba(255, 110, 166, 0.16);
 }
 
 /* overlay subtitle */
@@ -214,22 +223,22 @@
   margin: 10px 0 0;
   font-weight: 800;
   letter-spacing: 0.8px;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: clamp(16px, 2.8vw, 24px); /* scales down on small screens */
   color: #c7cde0;
-  text-shadow: 0 0 16px rgba(255,255,255,0.08);
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.08);
 }
 
 /* greenish win accent */
 .overlay-sub.win {
   color: #bfffe8;
-  text-shadow: 0 0 16px rgba(90,255,214,0.18);
+  text-shadow: 0 0 16px rgba(90, 255, 214, 0.18);
 }
 
 /* pinkish lose accent */
 .overlay-sub.lose {
   color: #ffd1e2;
-  text-shadow: 0 0 16px rgba(255,110,166,0.18);
+  text-shadow: 0 0 16px rgba(255, 110, 166, 0.18);
 }
 
 /* button row */
@@ -248,13 +257,17 @@
   font-weight: 900;
   letter-spacing: 0.4px;
   border: 1px solid rgba(255, 110, 166, 0.204);
-  background: linear-gradient(180deg, rgba(255, 110, 166, 0.141) 0%, rgba(255, 110, 166, 0.048) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 110, 166, 0.141) 0%,
+    rgba(255, 110, 166, 0.048) 100%
+  );
   color: #c4a1ae;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 26px rgba(255,110,166,0.12);
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 26px rgba(255, 110, 166, 0.12);
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
-
-
 
 /* two player cards under the game */
 .avatar-row {
@@ -270,9 +283,9 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
 }
 
 /* avatar size is controlled by css vars set from the jsx */
@@ -281,9 +294,9 @@
   height: var(--avatar-size, 88px);
   border-radius: 14px;
   object-fit: cover;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.35);
-  box-shadow: 0 0 22px rgba(110,231,255,0.10);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 22px rgba(110, 231, 255, 0.1);
 }
 
 /* player name line in the card */
@@ -291,7 +304,7 @@
   margin: 0;
   font-weight: 900;
   letter-spacing: 0.2px;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 /* stats line in the card */
@@ -300,7 +313,7 @@
   font-size: 13px;
   color: #aab1c3;
   letter-spacing: 0.2px;
-  font-family: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 /* small-screen tweaks so layout stays readable */

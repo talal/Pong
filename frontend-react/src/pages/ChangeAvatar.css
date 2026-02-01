@@ -1,43 +1,43 @@
-.ca-panel{
+.ca-panel {
   max-width: 560px;
 }
 
-.ca-topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+.ca-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 18px;
 }
 
-.ca-form{
-  display:flex;
-  flex-direction:columncol;
+.ca-form {
+  display: flex;
+  flex-direction: columncol;
   gap: 14px;
 }
 
-.ca-field{
-  display:flex;
-  flex-direction:column;
+.ca-field {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
-.ca-file{
+.ca-file {
   width: 100%;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
   color: var(--text);
   font-family: var(--mono);
 }
 
-.ca-help{
+.ca-help {
   font-size: 12px;
   line-height: 1.35;
 }
 
-.ca-btn{
+.ca-btn {
   width: 100%;
   padding: 11px 18px;
   border-radius: 12px;
@@ -45,68 +45,68 @@
   font-weight: 900;
   letter-spacing: 0.4px;
   font-family: var(--mono);
-  border: 1px solid rgba(255,255,255,0.14);
-  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
   color: var(--text);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.ca-btn:disabled{
+.ca-btn:disabled {
   opacity: 0.65;
   cursor: not-allowed;
 }
 
 /* matches the menu cyan family but adds a soft neon glow */
-.ca-btn-cyan{
-  border-color: rgba(110,231,255,0.34);
+.ca-btn-cyan {
+  border-color: rgba(110, 231, 255, 0.34);
   background:
-    radial-gradient(520px 160px at 30% 0%, rgba(110,231,255,0.18) 0%, rgba(0,0,0,0) 60%),
-    linear-gradient(180deg, rgba(110,231,255,0.12) 0%, rgba(110,231,255,0.05) 100%);
+    radial-gradient(520px 160px at 30% 0%, rgba(110, 231, 255, 0.18) 0%, rgba(0, 0, 0, 0) 60%),
+    linear-gradient(180deg, rgba(110, 231, 255, 0.12) 0%, rgba(110, 231, 255, 0.05) 100%);
   color: #ccf6ff;
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.45),
-    0 0 22px rgba(110,231,255,0.10),
-    inset 0 0 0 1px rgba(255,255,255,0.04);
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 22px rgba(110, 231, 255, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
-.ca-btn-ghost{
-  border-color: rgba(255,255,255,0.14);
+.ca-btn-ghost {
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
-.ca-alert{
+.ca-alert {
   padding: 12px;
   font-family: var(--mono);
   letter-spacing: 0.2px;
 }
 
-.ca-alert-error{
+.ca-alert-error {
   color: #ffd1dc;
-  border-color: rgba(255, 90, 120, 0.30);
-  background: linear-gradient(180deg, rgba(255,90,120,0.12) 0%, rgba(255,90,120,0.05) 100%);
+  border-color: rgba(255, 90, 120, 0.3);
+  background: linear-gradient(180deg, rgba(255, 90, 120, 0.12) 0%, rgba(255, 90, 120, 0.05) 100%);
 }
 
-.ca-alert-success{
+.ca-alert-success {
   color: #bfffe8;
-  border-color: rgba(90,255,214,0.26);
-  background: linear-gradient(180deg, rgba(90,255,214,0.10) 0%, rgba(90,255,214,0.04) 100%);
+  border-color: rgba(90, 255, 214, 0.26);
+  background: linear-gradient(180deg, rgba(90, 255, 214, 0.1) 0%, rgba(90, 255, 214, 0.04) 100%);
 }
 
-.ca-form{
-  display:flex;
+.ca-form {
+  display: flex;
   flex-direction: column; /* fixes the typo so layout stays consistent */
   gap: 14px;
 }
 
-.ca-file{
+.ca-file {
   width: 100%;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
   color: var(--text);
   font-family: var(--mono);
 }
@@ -116,40 +116,39 @@
   margin-right: 12px;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(110,231,255,0.34);
+  border: 1px solid rgba(110, 231, 255, 0.34);
   background:
-    radial-gradient(520px 160px at 30% 0%, rgba(110,231,255,0.18) 0%, rgba(0,0,0,0) 60%),
-    linear-gradient(180deg, rgba(110,231,255,0.12) 0%, rgba(110,231,255,0.05) 100%);
+    radial-gradient(520px 160px at 30% 0%, rgba(110, 231, 255, 0.18) 0%, rgba(0, 0, 0, 0) 60%),
+    linear-gradient(180deg, rgba(110, 231, 255, 0.12) 0%, rgba(110, 231, 255, 0.05) 100%);
   color: #ccf6ff;
   font-family: var(--mono);
   font-weight: 900;
   letter-spacing: 0.2px;
   cursor: pointer;
   box-shadow:
-    0 0 18px rgba(110,231,255,0.10),
-    inset 0 0 0 1px rgba(255,255,255,0.04);
+    0 0 18px rgba(110, 231, 255, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
-.ca-file::file-selector-button:hover{
-  border-color: rgba(110,231,255,0.45);
+.ca-file::file-selector-button:hover {
+  border-color: rgba(110, 231, 255, 0.45);
   box-shadow:
-    0 0 22px rgba(110,231,255,0.14),
-    inset 0 0 0 1px rgba(255,255,255,0.06);
+    0 0 22px rgba(110, 231, 255, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 /* safari fallback */
-.ca-file::-webkit-file-upload-button{
+.ca-file::-webkit-file-upload-button {
   margin-right: 12px;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(110,231,255,0.34);
+  border: 1px solid rgba(110, 231, 255, 0.34);
   background:
-    radial-gradient(520px 160px at 30% 0%, rgba(110,231,255,0.18) 0%, rgba(0,0,0,0) 60%),
-    linear-gradient(180deg, rgba(110,231,255,0.12) 0%, rgba(110,231,255,0.05) 100%);
+    radial-gradient(520px 160px at 30% 0%, rgba(110, 231, 255, 0.18) 0%, rgba(0, 0, 0, 0) 60%),
+    linear-gradient(180deg, rgba(110, 231, 255, 0.12) 0%, rgba(110, 231, 255, 0.05) 100%);
   color: #ccf6ff;
   font-family: var(--mono);
   font-weight: 900;
   letter-spacing: 0.2px;
   cursor: pointer;
 }
-

@@ -1,98 +1,106 @@
-.menu-panel{
+.menu-panel {
   max-width: 720px;
 }
 
 /* top row with title + status pill */
-.menu-topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+.menu-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 18px;
 }
 
 /* action stack */
-.menu-actions{
-  display:flex;
-  flex-direction:column;
+.menu-actions {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
 /* row for the two account buttons */
-.menu-row{
-  display:grid;
+.menu-row {
+  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
 /* base button style for links and buttons */
-.menu-btn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   padding: 14px 16px;
   border-radius: 14px;
   font-family: var(--mono);
   font-weight: 900;
   letter-spacing: 0.3px;
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 100%);
   color: var(--text);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
-  cursor:pointer;
-  user-select:none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  user-select: none;
   transition: transform 120ms ease;
 }
 
-.menu-btn:hover{
+.menu-btn:hover {
   transform: translateY(-1px);
 }
 
-.menu-btn:active{
+.menu-btn:active {
   transform: translateY(0px);
 }
 
 /* primary action uses magenta accent */
-.menu-btn-primary{
+.menu-btn-primary {
   border-color: var(--magenta-b);
   background: var(--magenta-bg);
   color: var(--magenta-t);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 26px rgba(255,110,166,0.12);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 26px rgba(255, 110, 166, 0.12);
 }
 
 /* neutral action */
-.menu-btn-ghost{
-  border-color: rgba(255,255,255,0.14);
+.menu-btn-ghost {
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 /* yellow accent for password */
 .menu-btn-pass{
   border-color: rgba(255, 214, 102, 0.35);
-  background: linear-gradient(180deg, rgba(255,214,102,0.14) 0%, rgba(255,214,102,0.06) 100%);
+  background: linear-gradient(180deg, rgba(255, 214, 102, 0.14) 0%, rgba(255, 214, 102, 0.06) 100%);
   color: #ffe6b8;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 22px rgba(255,214,102,0.08);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 22px rgba(255, 214, 102, 0.08);
 }
 
 /* blue/cyan accent for avatar */
-.menu-btn-cyan{
-  border-color: rgba(110,231,255,0.35);
-  background: linear-gradient(180deg, rgba(110,231,255,0.14) 0%, rgba(110,231,255,0.06) 100%);
+.menu-btn-cyan {
+  border-color: rgba(110, 231, 255, 0.35);
+  background: linear-gradient(180deg, rgba(110, 231, 255, 0.14) 0%, rgba(110, 231, 255, 0.06) 100%);
   color: #ccf6ff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 22px rgba(110,231,255,0.08);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 22px rgba(110, 231, 255, 0.08);
 }
 
 /* logout button */
 .menu-btn-logout{
   border-color: rgba(255, 90, 120, 0.35);
-  background: linear-gradient(180deg, rgba(255,90,120,0.16) 0%, rgba(255,90,120,0.07) 100%);
+  background: linear-gradient(180deg, rgba(255, 90, 120, 0.16) 0%, rgba(255, 90, 120, 0.07) 100%);
   color: #ffd1dc;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 22px rgba(255,90,120,0.08);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 0 22px rgba(255, 90, 120, 0.08);
 }
 
 /* stack the two account buttons on small screens */
-@media (max-width: 520px){
-  .menu-row{
+@media (max-width: 520px) {
+  .menu-row {
     grid-template-columns: 1fr;
   }
 }
