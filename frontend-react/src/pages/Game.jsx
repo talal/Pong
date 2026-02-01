@@ -521,9 +521,6 @@ export default function Game() {
                 </div>
               </div>
             </div>
-
-            {/* quick hint while integrating: if you want a separate waiting card below the canvas,
-                keep it outside the grid so it does not affect centering */}
           </div>
         </div>
       </div>
