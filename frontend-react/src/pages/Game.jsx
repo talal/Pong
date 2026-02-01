@@ -1,10 +1,10 @@
 // pong game screen
 // renders the canvas game view, connects to the backend websocket using stomp,
-// joins matchmaking, then receives game state updates from /topic/game/{gameId}.
-// draws the game inside a requestanimationframe loop.
-// uses refs for everything the loop reads to avoid stale values.
+// joins matchmaking, then receives game state updates from /topic/game/{gameId}
+// draws the game inside a requestanimationframe loop
+// uses refs for everything the loop reads to avoid stale values
 // shows a neon overlay inside the canvas area while connecting/waiting/finished
-// pulls win rate + games played from /api/leaderboard and shows it under each player card.
+// pulls win rate + games played from /api/leaderboard and shows it under each player card
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
