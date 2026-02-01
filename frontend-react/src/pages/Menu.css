@@ -67,7 +67,7 @@
 }
 
 /* yellow accent for password */
-.menu-btn-warn{
+.menu-btn-pass{
   border-color: rgba(255, 214, 102, 0.35);
   background: linear-gradient(180deg, rgba(255,214,102,0.14) 0%, rgba(255,214,102,0.06) 100%);
   color: #ffe6b8;
@@ -82,8 +82,8 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 22px rgba(110,231,255,0.08);
 }
 
-/* danger action */
-.menu-btn-danger{
+/* logout button */
+.menu-btn-logout{
   border-color: rgba(255, 90, 120, 0.35);
   background: linear-gradient(180deg, rgba(255,90,120,0.16) 0%, rgba(255,90,120,0.07) 100%);
   color: #ffd1dc;

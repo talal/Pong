@@ -5,21 +5,33 @@ import './Theme.css'
 import './Leaderboard.css'
 
 export default function Leaderboard() {
+  // players is the parsed array from /api/leaderboard
   const [players, setPlayers] = useState([])
+
+  // loading controls the spinner vs table rendering
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // prevents state updates if the component unmounts before fetch completes
     let cancelled = false
 
     ;(async () => {
       try {
+        // apiFetch is expected to attach auth headers and handle base url/proxy settings
         const response = await apiFetch('/api/leaderboard')
+
+        // on error status we stop and show the empty table state
         if (!response.ok) return
+
         const data = await response.json()
+
+        // backend should return an array, this avoids runtime errors
         if (!cancelled) setPlayers(Array.isArray(data) ? data : [])
       } catch (e) {
+        // network errors, server down, bad proxy, etc.
         console.error('failed to load leaderboard', e)
       } finally {
+        // always stop the spinner, even if the request failed
         if (!cancelled) setLoading(false)
       }
     })()
@@ -40,6 +52,7 @@ export default function Leaderboard() {
 
           {loading ? (
             <div className="lb-loading card-glass">
+              {/* decorative spinner */}
               <div className="lb-spinner" aria-hidden="true" />
               <div className="text-muted">Loading…</div>
             </div>
@@ -58,6 +71,7 @@ export default function Leaderboard() {
 
                 <tbody>
                   {players.map((p, i) => (
+                    // username can repeat in edge cases, adding index keeps the key stable enough for this table
                     <tr key={`${p?.username || 'player'}-${i}`}>
                       <td className="lb-rank">{i + 1}</td>
                       <td className="lb-player">{p.username}</td>
@@ -67,6 +81,7 @@ export default function Leaderboard() {
                     </tr>
                   ))}
 
+                  {/* empty state when the backend returns [] or the request failed */}
                   {players.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="lb-empty text-muted">

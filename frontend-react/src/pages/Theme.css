@@ -115,7 +115,7 @@
   font-family: var(--mono);
 }
 
-/* reusable glass card */
+/* glass card */
 .card-glass{
   border-radius: 16px;
   border: 1px solid var(--border);
@@ -128,7 +128,7 @@
   color: var(--muted);
 }
 
-/* consistent input styling */
+/* input styling */
 .cyber-input{
   width: 100%;
   padding: 12px 12px;

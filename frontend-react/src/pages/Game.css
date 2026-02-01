@@ -176,7 +176,7 @@
   height: var(--canvas-h, 500px);
 }
 
-/* overlay that covers the canvas; shown for waiting/connecting/error/finished */
+/* overlay that covers the canvas, shown for waiting/connecting/error/finished */
 .game-overlay {
   position: absolute;
   inset: 6px; /* match canvas-inner padding so corners align */
@@ -220,13 +220,13 @@
   text-shadow: 0 0 16px rgba(255,255,255,0.08);
 }
 
-/* green-ish win accent */
+/* greenish win accent */
 .overlay-sub.win {
   color: #bfffe8;
   text-shadow: 0 0 16px rgba(90,255,214,0.18);
 }
 
-/* pink-ish lose accent */
+/* pinkish lose accent */
 .overlay-sub.lose {
   color: #ffd1e2;
   text-shadow: 0 0 16px rgba(255,110,166,0.18);
@@ -275,7 +275,7 @@
   box-shadow: 0 12px 36px rgba(0,0,0,0.45);
 }
 
-/* avatar size is controlled by css vars set from jsx */
+/* avatar size is controlled by css vars set from the jsx */
 .avatar-img {
   width: var(--avatar-size, 88px);
   height: var(--avatar-size, 88px);

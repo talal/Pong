@@ -111,7 +111,7 @@
   font-family: var(--mono);
 }
 
-/* styles the actual "choose file" button on modern browsers */
+/* styles the "choose file" button */
 .ca-file::file-selector-button{
   margin-right: 12px;
   padding: 10px 12px;

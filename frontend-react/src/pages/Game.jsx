@@ -1,10 +1,10 @@
 // pong game screen
 // renders the canvas game view, connects to the backend websocket using stomp,
-// joins matchmaking, then receives game state updates from /topic/game/{gameId}.
-// draws the game inside a requestanimationframe loop.
-// uses refs for everything the loop reads to avoid stale values.
+// joins matchmaking, then receives game state updates from /topic/game/{gameId}
+// draws the game inside a requestanimationframe loop
+// uses refs for everything the loop reads to avoid stale values
 // shows a neon overlay inside the canvas area while connecting/waiting/finished
-// pulls win rate + games played from /api/leaderboard and shows it under each player card.
+// pulls win rate + games played from /api/leaderboard and shows it under each player card
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -119,9 +119,9 @@ export default function Game() {
   }, [status, youWon])
 
   // responsive sizing
-  // the canvas always draws internally at 800x500, but we scale its displayed size in css (width/height).
-  // we compute a target display size that fits the viewport height and the panel width.
-  // we also scale padding/gaps/avatars down on short screens to keep everything visible.
+  // the canvas always draws internally at 800x500, but we scale its displayed size in css (width/height)
+  // we compute a target display size that fits the viewport height and the panel width
+  // we also scale padding/gaps/avatars down on short screens to keep everything visible
   useEffect(() => {
     function computeUi() {
       const vw = window.innerWidth
@@ -179,7 +179,7 @@ export default function Game() {
 
   // fetch win rate and games played
   // this hits /api/leaderboard once names are known (after match starts) and extracts the entries for both players.
-  // keeps the call minimal: a single request and local lookup.
+  // keeps the call minimal: a single request and local lookup
   useEffect(() => {
     let cancelled = false
 
@@ -428,8 +428,7 @@ export default function Game() {
   )
 
   // overlay is visible any time we are not actively playing
-  // finished uses a win/lose accent; waiting/connecting/error keep the neutral styling
-  const overlayVisible = status !== 'PLAYING'
+  // finished uses a win/lose accent, waiting/connecting/error keep the neutral styling
   const overlayTitle = overlayModel?.title ?? ''
   const overlaySub = overlayModel?.sub ?? ''
 
@@ -457,10 +456,20 @@ export default function Game() {
                   <div className="canvas-inner">
                     <canvas ref={canvasRef} width={800} height={500} className="pong-canvas" />
 
+                    {/* overlay is a dom layer so it can glow/blur without extra canvas work */}
                     <div className={`game-overlay ${status !== 'PLAYING' ? 'is-visible' : ''}`}>
                       <div>
                         <p className="overlay-title">{overlayTitle}</p>
-                        <p className={`overlay-sub ${status === 'FINISHED' ? (youWon ? 'win' : 'lose') : ''}`}>
+
+                        {/* win/lose only applies in finished state; other states use the default color */}
+                        <p
+                          className={[
+                            'overlay-sub',
+                            status === 'FINISHED' ? (youWon ? 'win' : 'lose') : '',
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        >
                           {overlaySub}
                         </p>
                       </div>
@@ -469,22 +478,17 @@ export default function Game() {
                 </div>
               </div>
 
-  {/* right column */}
-  <div className="side-name">
-    <h2 className="side-name-text side-right">{p2Name}</h2>
-  </div>
-</div>
-
+              {/* right column */}
+              <div className="side-name">
+                <h2 className="side-name-text side-right">{p2Name}</h2>
+              </div>
+            </div>
 
             <div className="controls">
               <button className="btn-magenta" onClick={returnToMenu}>
                 Return to Menu
               </button>
             </div>
-
-            {/* small helper text under the button only while waiting
-                the main waiting message is still inside the canvas overlay */}
-            {status === 'WAITING' ? <div className="msg">Waiting for an opponent...</div> : null}
 
             <div className="avatar-row">
               <div className="avatar-card">
