@@ -1,10 +1,10 @@
 // pong game screen
 // renders the canvas game view, connects to the backend websocket using stomp,
-// joins matchmaking, then receives game state updates from /topic/game/{gameId}
-// draws the game inside a requestanimationframe loop
-// uses refs for everything the loop reads to avoid stale values
+// joins matchmaking, then receives game state updates from /topic/game/{gameId}.
+// draws the game inside a requestanimationframe loop.
+// uses refs for everything the loop reads to avoid stale values.
 // shows a neon overlay inside the canvas area while connecting/waiting/finished
-// pulls win rate + games played from /api/leaderboard and shows it under each player card
+// pulls win rate + games played from /api/leaderboard and shows it under each player card.
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -119,9 +119,9 @@ export default function Game() {
   }, [status, youWon])
 
   // responsive sizing
-  // the canvas always draws internally at 800x500, but we scale its displayed size in css (width/height)
-  // we compute a target display size that fits the viewport height and the panel width
-  // we also scale padding/gaps/avatars down on short screens to keep everything visible
+  // the canvas always draws internally at 800x500, but we scale its displayed size in css (width/height).
+  // we compute a target display size that fits the viewport height and the panel width.
+  // we also scale padding/gaps/avatars down on short screens to keep everything visible.
   useEffect(() => {
     function computeUi() {
       const vw = window.innerWidth
@@ -179,7 +179,7 @@ export default function Game() {
 
   // fetch win rate and games played
   // this hits /api/leaderboard once names are known (after match starts) and extracts the entries for both players.
-  // keeps the call minimal: a single request and local lookup
+  // keeps the call minimal: a single request and local lookup.
   useEffect(() => {
     let cancelled = false
 
@@ -286,7 +286,7 @@ export default function Game() {
             setWinner(
               game.player1.score > game.player2.score
                 ? game.player1.username
-                : game.player2.username,
+                : game.player2.username
             )
           }
 
@@ -424,7 +424,7 @@ export default function Game() {
       '--content-gap': `${ui.contentGap}px`,
       '--avatar-size': `${ui.avatarSize}px`,
     }),
-    [ui],
+    [ui]
   )
 
   // overlay is visible any time we are not actively playing
@@ -483,11 +483,6 @@ export default function Game() {
                 <h2 className="side-name-text side-right">{p2Name}</h2>
               </div>
             </div>
-              {/* right column */}
-              <div className="side-name">
-                <h2 className="side-name-text side-right">{p2Name}</h2>
-              </div>
-            </div>
 
             <div className="controls">
               <button className="btn-magenta" onClick={returnToMenu}>
@@ -526,6 +521,9 @@ export default function Game() {
                 </div>
               </div>
             </div>
+
+            {/* quick hint while integrating: if you want a separate waiting card below the canvas,
+                keep it outside the grid so it does not affect centering */}
           </div>
         </div>
       </div>
