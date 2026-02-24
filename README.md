@@ -1,10 +1,12 @@
 # Pong - PaF Gruppe I (WS 25/26)
 
+This game was a group project for the "Patterns and Frameworks (PaF)" course at TH Lübeck.
+
 ## Authors
 
-- Anwar, Muhammad Talal (muhammadtalal.anwar@stud.th-luebeck.de)
-- Lefhal-Lalaoui, Mohammed (mohammed.lefhal-lalaoui@stud.th-luebeck.de)
-- Omarov, Roman (roman.omarov@stud.th-luebeck.de)
+- Anwar, Muhammad Talal
+- Lefhal-Lalaoui, Mohammed
+- Omarov, Roman
 
 ## Screencast
 <https://youtu.be/w9YyqTY9-Dc?si=huX6onfz6b0H9L9b>
